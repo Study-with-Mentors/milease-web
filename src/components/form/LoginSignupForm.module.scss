@@ -1,0 +1,27 @@
+.footer {
+    @apply flex items-center justify-center flex-col mt-12 mb-8;
+
+    .divider {
+        @apply text-gray_main text-base font-medium;
+    }
+
+    .button-wrapper {
+        @apply flex justify-center mt-10;
+
+        .btn {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            color: black;
+            border: 1px solid rgba(0, 0, 0, 0.519);
+            border-radius: 30px;
+            height: 50px;
+            width: 500px;
+
+            .icon {
+                width: 20px;
+                margin-right: 20px;
+            }
+        }
+    }
+}
