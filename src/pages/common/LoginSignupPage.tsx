@@ -4,6 +4,7 @@ import styled from "./LoginSignupPage.module.scss";
 import Milease from "../../assets/milease_logo.png";
 import { useState } from "react";
 import SignupForm from "../../components/form/SignupForm";
+import AuthImage from "../../assets/login_signup_main.png"
 
 const LoginSignupPage = () => {
 
@@ -16,6 +17,11 @@ const LoginSignupPage = () => {
   return (
     <>
       <div className={styled["container-main"]}>
+        <div className={styled["image-container"]}>
+          <h1 style={{ fontSize: '30px' }}>Hello there!</h1>
+          <h2>Let’s explore further to your personal experience</h2>
+          <img src={AuthImage} alt="AuthImage" className={styled["auth-image"]} />
+        </div>
         <div className={styled["container"]}>
           <div className={styled["header"]}>
             <Link to={"/"} style={{ textDecoration: "none" }}>

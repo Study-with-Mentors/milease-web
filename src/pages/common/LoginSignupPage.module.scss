@@ -1,21 +1,31 @@
 .container-main {
-    @apply flex justify-center items-center relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .image-container {
+        margin: 50px;
+        text-align: left;
+        background: radial-gradient(closest-side, rgba(245, 140, 140, 0.452), #00000000);
+        ;
+        padding: 50px;
+    }
 
     .container {
         @apply flex flex-col items-center shadow-2xl;
         border-radius: 36px;
         background-color: white;
-        width: 800px;
-        height: fit-content;
+        width: 600px;
+        height: 650px;
         padding: 30px;
 
         .header {
 
             @apply flex items-center justify-center flex-col mt-12 mb-8;
-            padding: 20px 200px;
+            padding: 15px 100px;
 
             .logo {
-                width: 40%;
+                width: 25%;
             }
 
             .text {
