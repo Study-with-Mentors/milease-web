@@ -1,0 +1,33 @@
+.container-main {
+    height: fit-content;
+    background-color: #202021;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 30px;
+
+    .container-top {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        
+        .container {
+            width: 250px;
+            padding: 0 5%;
+
+            .title {
+                font-weight: bold;
+            }
+
+            .description {}
+        }
+    }
+
+    .footer-container {
+        .icon {}
+
+        .copyright {}
+    }
+}
