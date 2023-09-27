@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import LoginForm from "../../components/form/LoginForm";
 import styled from "./LoginSignupPage.module.scss";
 import Milease from "../../assets/milease_logo.png";
@@ -7,8 +7,10 @@ import SignupForm from "../../components/form/SignupForm";
 import AuthImage from "../../assets/login_signup_main.png"
 
 const LoginSignupPage = () => {
+  const location = useLocation();
+  const propsData = location.state;
 
-  const [current, setCurrent] = useState("loginForm")
+  const [current, setCurrent] = useState(propsData ? propsData?.current : "loginForm")
   const onAuthPageChange = (e: any) => {
     setCurrent(e.target.value)
     console.log(e.target.value)
