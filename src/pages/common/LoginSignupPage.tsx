@@ -20,7 +20,7 @@ const LoginSignupPage = () => {
     <>
       <div className={styled["container-main"]}>
         <div className={styled["image-container"]}>
-          <h1 style={{ fontSize: '30px' }}>Hello there!</h1>
+          <h1 style={{ fontSize: '30px', color: 'black' }}>Hello there!</h1>
           <h2>Let’s explore further to your personal experience</h2>
           <img src={AuthImage} alt="AuthImage" className={styled["auth-image"]} />
         </div>
