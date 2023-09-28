@@ -6,6 +6,8 @@ const HomePage = () => {
     return (
         <div className={styled["container-main"]}>
             <MileaseNavbar />
+            <div style={{ marginTop: '100px', flex: 1 }}>
+            </div>
             <MileaseFooter />
         </div>
     )

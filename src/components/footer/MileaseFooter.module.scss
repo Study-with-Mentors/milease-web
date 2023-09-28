@@ -2,11 +2,11 @@
     height: fit-content;
     background-color: #202021;
     width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
     width: 100%;
     padding: 30px;
+    text-align: center;
+    position: relative;
+    bottom: 0;
 
     .container-top {
         display: flex;
@@ -26,7 +26,13 @@
     }
 
     .footer-container {
-        .icon {}
+        .icon-container {
+            .icon {
+                width: 45px;
+                height: 45px;
+                padding: 10px;
+            }
+        }
 
         .copyright {}
     }

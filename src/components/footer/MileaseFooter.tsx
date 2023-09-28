@@ -1,4 +1,6 @@
 import styled from "./MileaseFooter.module.scss";
+import Facebook from "../../assets/facebook.svg"
+import Instagram from "../../assets/instagram.svg"
 
 export const MileaseFooter = () => {
 
@@ -19,7 +21,14 @@ export const MileaseFooter = () => {
                 </div>
             </div>
             <div className={styled["footer-container"]}>
-                <div className={styled["icon"]}>Facebook Instagram</div>
+                <div className={styled["icon-container"]}>
+                    <a href="https://www.facebook.com/profile.php?id=61551895858707" target="_blank" rel="noreferrer">
+                        <img src={Facebook} alt="Facebook" className={styled["icon"]} />
+                    </a>
+                    <a href="https://www.instagram.com/milease?fbclid=IwAR3qvLA4Hibpj30MgCX0RQZtUZRIbzX-99Cd7b77axI-59ZTNCUgh55QdPU" target="_blank" rel="noreferrer">
+                        <img src={Instagram} alt="Instagram" className={styled["icon"]} />
+                    </a>
+                </div>
                 <div className={styled["copyright"]}>Copyright © 2023 MILEASE. All rights reserved</div>
             </div>
         </div>
