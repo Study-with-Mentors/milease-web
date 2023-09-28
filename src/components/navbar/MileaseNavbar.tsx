@@ -30,11 +30,11 @@ export const MileaseNavbar = () => {
                 </div>
             </div>
             <div>
-                <Link to={'/auth'} className={styled["loginLink"]} state={{ current: 'loginForm' }}>
+                <Link to={'/auth'} className={styled["loginLink"]}>
                     Login
                 </Link>
-                <Link to={'/auth'} className={styled["signupLink"]} state={{ current: 'signupForm' }}>
-                    Sign Up
+                <Link to={'/auth'} className={styled["downloadLink"]}>
+                    Download our app
                 </Link>
             </div>
         </div>

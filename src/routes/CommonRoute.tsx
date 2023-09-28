@@ -3,6 +3,7 @@ import LoginSignupPage from "../pages/common/LoginSignupPage";
 import HomePage from "../pages/common/HomePage";
 import TravelPage from "../pages/common/TravelPage";
 import AboutPage from "../pages/common/AboutPage";
+import LoginGooglePage from "../pages/common/LoginGooglePage";
 
 const CommonRoute = () => {
   let element = useRoutes([
@@ -23,7 +24,7 @@ const CommonRoute = () => {
     },
     {
       path: "auth",
-      element: <LoginSignupPage />,
+      element: <LoginGooglePage />,
       index: true,
     },
   ]);
