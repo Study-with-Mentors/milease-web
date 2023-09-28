@@ -7,11 +7,6 @@
     background-image: url('../../assets/LoginBG.png');
     background-repeat: no-repeat;
     background-size: cover;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
 
     .image-container {
         margin: 50px;
@@ -31,11 +26,10 @@
 
         .header {
             text-align: center;          
-            padding: 15px 100px;
+            padding: 10px 100px;
 
             .logo {
                 width: 25%;
-                left: 50%
             }
 
             .text {
