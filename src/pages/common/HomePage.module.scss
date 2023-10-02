@@ -1,4 +1,4 @@
-$grey-text: #b7b7b7;
+$grey-text: #8f8f8f;
 $light-red: #ee5a5b;
 $dark-red: #d3393b;
 $dark-blue: #074792;
@@ -98,6 +98,13 @@ $dark-blue: #074792;
                 color: white;
                 font-weight: bold;
             }
+        }
+
+        .detail-flex-multiple {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: flex-start;
+            flex-wrap: wrap;
         }
     }
 }

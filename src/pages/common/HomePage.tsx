@@ -3,8 +3,14 @@ import MileaseNavbar from "../../components/navbar/MileaseNavbar"
 import HomeImageTop from "../../assets/Home1.png"
 import HomeImageLogin from "../../assets/Home2.png"
 import HomeImageCity from "../../assets/Home3.png"
+import WhatWeDoImage1 from "../../assets/what_we_do_1.png"
+import WhatWeDoImage2 from "../../assets/what_we_do_2.png"
+import WhatWeDoImage3 from "../../assets/what_we_do_3.png"
+import WhatWeDoImage4 from "../../assets/what_we_do_4.png"
+import WhatWeDoImage5 from "../../assets/what_we_do_5.png"
 import styled from "./HomePage.module.scss";
 import { Link } from "react-router-dom";
+import WhatWeDoCard from "../../components/home/WhatWeDoCard";
 
 const HomePage = () => {
     return (
@@ -17,11 +23,6 @@ const HomePage = () => {
                         <div className={styled["description-left"]}>Find a place, accommodations with many choice, planning on your trip and let’s go</div>
                     </div>
                     <img src={HomeImageTop} alt="HomeImageTop" className={styled["image"]} />
-                </div>
-                <div className={styled["detail-flex-center"]}>
-                    <div className={styled["title"]}><span style={{ color: '#d3393b' }}>EASY</span> STYLE, EASY <span style={{ color: '#d3393b' }}>MILES!</span></div>
-                    <div className={styled["description-center"]}>Get to know Vietnam like never before. With insightful cultural information, learn not just where to go, but also appreciate the stories and history behind each destination.</div>
-                    {/* TODO: Add flex image */}
                 </div>
                 <div className={styled["detail-flex-side"]}>
                     <div className={styled["title-description"]}>
@@ -42,7 +43,21 @@ const HomePage = () => {
                         <Link to={'/about'} className={styled["description-right-red"]}>Read More</Link>
                     </div>
                 </div>
-                {/* TODO: WHAT WE DO */}
+                <div className={styled["detail-flex-center"]}>
+                    <div className={styled["title-right-description"]}>
+                        <div className={styled["title"]}>WHAT <span style={{ color: '#074792' }}>WE DO</span></div>
+                        <div className={styled["description-center"]}>Make travel planning a breeze with our smart route suggestions and budget management tools. Never worry about going over budget or getting lost on your journey.</div>
+                    </div>
+                </div>
+                <div>
+                    <div className={styled["detail-flex-multiple"]}>
+                        <WhatWeDoCard image={WhatWeDoImage1} title="Unique Travel" description="Locale Travel provides a full spectrum of  Event Travel Management Services.  We can provide the hotel rooms you need.  We can provide the transfers you need from the airport to the hotel." />
+                        <WhatWeDoCard image={WhatWeDoImage1} title="Corporate" description="At Locale Travel, our job is to guide you through this fast-paced environment, ensuring your travel program is running smoothly and efficiently while your travellers receive the best in customer service, technology and security." />
+                        <WhatWeDoCard image={WhatWeDoImage1} title="Schedule Arrangement" description="You can be confident your leisure and holiday travel will be a unique and well crafted 'event' - because Locale Travel will apply the quality and personal attention and experience we apply to all our travel solutions." />
+                        <WhatWeDoCard image={WhatWeDoImage1} title="Expense Support" description="Highly experienced staff that understand the flexibility and organisation that’s needed. Over three decades of experience with touring parties. Close relationships with the travel suppliers you use. Exceptional service and benefits when you need it now. Not later." />
+                        <WhatWeDoCard image={WhatWeDoImage1} title="Smart Route options" description="Your successful group travel and conference is created from a mix of the right people, resources and know-how. Take advantage of our unique group travel & conference technology tools." />
+                    </div>
+                </div>
                 <div className={styled["detail-flex-center"]}>
                     <div className={styled["description-center"]}>What are you waiting for?</div>
                     <div className={styled["title-big"]}>Explore Vietnam in your way!</div>

@@ -13,7 +13,7 @@ export const MileaseFooter = () => {
                 </div>
                 <div className={styled["container"]}>
                     <div className={styled["title"]}>Email Contact</div>
-                    <div className={styled["description"]}>milease@gmail.com</div>
+                    <div className={styled["description"]}>mileasexe@gmail.com</div>
                 </div>
                 <div className={styled["container"]}>
                     <div className={styled["title"]}>Contact</div>

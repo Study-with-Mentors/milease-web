@@ -1,0 +1,19 @@
+$grey-text: #8f8f8f;
+
+.container-main {
+    margin: 0 5% 5% 0;
+    width: 25%;
+    text-align: justify;
+    text-justify: inter-word;
+
+    .image {}
+
+    .title {
+        font-weight: bold;
+        margin: 10px 0;
+    }
+
+    .description {
+        color: $grey-text
+    }
+}
