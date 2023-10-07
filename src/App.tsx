@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ConfigProvider } from "antd";
 import AppRoute from "./routes/AppRoute";
 import { BrowserRouter } from "react-router-dom";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,9 +25,11 @@ function App() {
         }}
       >
         <QueryClientProvider client={queryClient}>
-          <BrowserRouter>
-            <AppRoute />
-          </BrowserRouter>
+          <GoogleOAuthProvider clientId="660757934763-6rcnn61l2ctd81jdk15fb0prmda55u9u.apps.googleusercontent.com">
+            <BrowserRouter>
+              <AppRoute />
+            </BrowserRouter>
+          </GoogleOAuthProvider>
         </QueryClientProvider>
       </ConfigProvider>
     </>

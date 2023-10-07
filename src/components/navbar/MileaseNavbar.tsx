@@ -19,11 +19,6 @@ export const MileaseNavbar = () => {
                     </NavLink>
                 </div>
                 <div className={styled["navlink-container"]}>
-                    <NavLink to={'/planning'} className={({ isActive }) => isActive ? `${styled.navlink} ${styled.navlinkActive}` : `${styled.navlink}`}>
-                        Planning
-                    </NavLink>
-                </div>
-                <div className={styled["navlink-container"]}>
                     <NavLink to={'/about'} className={({ isActive }) => isActive ? `${styled.navlink} ${styled.navlinkActive}` : `${styled.navlink}`}>
                         About
                     </NavLink>

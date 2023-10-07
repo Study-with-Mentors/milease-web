@@ -1,9 +1,9 @@
-import { Outlet, useRoutes } from "react-router-dom";
-import LoginSignupPage from "../pages/common/LoginSignupPage";
+import { useRoutes } from "react-router-dom";
 import HomePage from "../pages/common/HomePage";
 import TravelPage from "../pages/common/TravelPage";
 import AboutPage from "../pages/common/AboutPage";
 import LoginGooglePage from "../pages/common/LoginGooglePage";
+import Dashboard from "../pages/common/admin/dashboard/Dashboard";
 
 const CommonRoute = () => {
   let element = useRoutes([
@@ -25,6 +25,11 @@ const CommonRoute = () => {
     {
       path: "auth",
       element: <LoginGooglePage />,
+      index: true,
+    },
+    {
+      path: "admin",
+      element: <Dashboard />,
       index: true,
     },
   ]);

@@ -5,7 +5,7 @@ class Http {
   instance: AxiosInstance;
   constructor() {
     this.instance = axios.create({
-      baseURL: process.env.REACT_APP_SERVER_LINK,
+      baseURL: "https://milease-api.azurewebsites.net/api/",
       timeout: 10000,
       headers: {
         "Content-Type": "application/json",
@@ -44,15 +44,6 @@ http.interceptors.response.use(
     return res;
   },
   (err) => {
-    if (err.response.status == 400) {
-      localStorage.clear();
-      window.location.href =
-        process.env.REACT_APP_CLIENT_LINK + "/auth" ||
-        "https://studywithmentor.id.vn/auth";
-      notification.error({
-        message: "Your login session has expired. Please login again",
-      });
-    }
     throw err;
   }
 );

@@ -1,0 +1,52 @@
+.main-container {
+    max-height: 100vh;
+    height: 100vh;
+    background-color: #f2f4f5;
+    padding: 30px 50px;
+    color: black;
+
+    .top-container {
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .stats {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .item-wrapper {
+            width: 20%;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+            .title {
+                font-size: 20px;
+            }
+
+            .data {
+                font-size: 30px;
+                font-weight: bold;
+            }
+        }
+
+        .list-wrapper {
+            width: 100%;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+            .title {
+                font-size: 20px;
+            }
+
+            .data {
+                font-size: 30px;
+                font-weight: bold;
+            }
+        }
+    }
+}
