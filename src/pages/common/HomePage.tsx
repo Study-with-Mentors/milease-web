@@ -13,6 +13,8 @@ import { Link } from "react-router-dom";
 import WhatWeDoCard from "../../components/home/WhatWeDoCard";
 
 const HomePage = () => {
+    document.title = "Milease"
+
     return (
         <div className={styled["container-main"]}>
             <MileaseNavbar />

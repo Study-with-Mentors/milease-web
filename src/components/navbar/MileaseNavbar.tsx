@@ -1,8 +1,27 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import styled from "./MileaseNavbar.module.scss";
 import Logo from "../../assets/milease_icon.png"
+import { useEffect, useState } from "react";
 
 export const MileaseNavbar = () => {
+
+    const [login, setLogin] = useState(false)
+    const [render, setRender] = useState(0)
+
+    useEffect(() => {
+        const token = localStorage.getItem("access_token")
+        if (token) {
+            setLogin(true)
+        } else {
+            setLogin(false)
+        }
+    }, [render])
+
+    const onLogout = () => {
+        localStorage.removeItem("access_token")
+        setLogin(false)
+        setRender(x => x + 1)
+    }
 
     return (
         <div className={styled["container-main"]}>
@@ -13,11 +32,11 @@ export const MileaseNavbar = () => {
                         Home
                     </NavLink>
                 </div>
-                <div className={styled["navlink-container"]}>
+                {/* <div className={styled["navlink-container"]}>
                     <NavLink to={'/travel'} className={({ isActive }) => isActive ? `${styled.navlink} ${styled.navlinkActive}` : `${styled.navlink}`}>
                         Travel
                     </NavLink>
-                </div>
+                </div> */}
                 <div className={styled["navlink-container"]}>
                     <NavLink to={'/about'} className={({ isActive }) => isActive ? `${styled.navlink} ${styled.navlinkActive}` : `${styled.navlink}`}>
                         About
@@ -25,9 +44,14 @@ export const MileaseNavbar = () => {
                 </div>
             </div>
             <div>
-                <Link to={'/auth'} className={styled["loginLink"]}>
-                    Login
-                </Link>
+                {!login ?
+                    <Link to={'/auth'} className={styled["loginLink"]}>
+                        Login
+                    </Link> :
+                    <button className={styled["logoutLink"]} onClick={onLogout}>
+                        Logout
+                    </button>
+                }
                 <Link to={'/auth'} className={styled["downloadLink"]}>
                     Download our app
                 </Link>

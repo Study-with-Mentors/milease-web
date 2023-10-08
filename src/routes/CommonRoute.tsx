@@ -6,6 +6,7 @@ import LoginGooglePage from "../pages/common/LoginGooglePage";
 import Dashboard from "../pages/common/admin/dashboard/Dashboard";
 
 const CommonRoute = () => {
+
   let element = useRoutes([
     {
       path: "",

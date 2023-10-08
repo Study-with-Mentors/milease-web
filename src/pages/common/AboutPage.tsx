@@ -7,6 +7,7 @@ import AboutImage4 from "../../assets/about4.png"
 import styled from "./AboutPage.module.scss";
 
 const AboutPage = () => {
+    document.title = "About"
     return (
         <div className={styled["container-main"]}>
             <MileaseNavbar />
