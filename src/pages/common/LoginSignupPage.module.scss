@@ -1,3 +1,5 @@
+$primary-red: #ee5a5b;
+
 .container-main {
     display: flex;
     flex-direction: row;
@@ -74,7 +76,7 @@
                     left: 0;
                     z-index: 0;
                     border-radius: 30px;
-                    background: #ee5a5b;
+                    background: $primary-red;
                     transition: all 0.6s;
                 }
 

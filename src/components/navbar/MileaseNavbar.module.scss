@@ -1,3 +1,5 @@
+$primary-red: #ee5a5b;
+
 .container-main {
     position: fixed;
     display: flex;
@@ -36,7 +38,7 @@
                 content: "";
                 width: 30px;
                 height: 4px;
-                background: #ee5a5b;
+                background: $primary-red;
                 position: absolute;
                 bottom: -4px;
                 left: 30px;
@@ -60,7 +62,7 @@
     }
 
     .downloadLink {
-        background-color: #ee5a5b;
+        background-color: $primary-red;
         padding: 10px 30px;
         border-radius: 20px;
         color: white;

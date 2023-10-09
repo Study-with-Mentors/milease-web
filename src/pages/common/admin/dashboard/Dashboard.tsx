@@ -3,7 +3,16 @@ import styled from "./Dashboard.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Logo from "../../../../assets/milease_logo.png"
-import { Avatar, Divider, List } from "antd";
+import { Avatar } from "antd";
+import {
+  CircularProgressbar,
+  CircularProgressbarWithChildren,
+  buildStyles
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import Charts from "./Charts";
+import { PieChartOutline } from "@mui/icons-material";
+import Color from "../../../../constants/Color";
 
 const Dashboard = () => {
 
@@ -74,7 +83,7 @@ const Dashboard = () => {
     return planStatus[Math.floor(Math.random() * planStatus.length)];
   };
 
-  const fake_plans = Array.from({ length: 5 }, (_, index) => {
+  const fake_plans = Array.from({ length: 3 }, (_, index) => {
     return <div key={index} className={styled.data}>
       <div>
         <div className={styled.planname}>{planName[index]}</div>
@@ -84,7 +93,7 @@ const Dashboard = () => {
     </div>
   });
 
-  const fake_users = Array.from({ length: 5 }, (_, index) => {
+  const fake_users = Array.from({ length: 3 }, (_, index) => {
     return <div key={index} className={styled.data}>
       <Avatar size={50} icon={<AntDesignOutlined />} />
       <div>
@@ -104,8 +113,9 @@ const Dashboard = () => {
           <button className={styled["logout-button"]} onClick={onLogout}>
             Logout
           </button>
-
         </div>
+
+        {/* //General numbers */}
         <div className={styled["stats"]}>
           <div className={styled["item-wrapper"]}>
             <div className={styled["title"]}><UserOutlined style={{ paddingRight: '10px' }} /> Total Users</div>
@@ -124,16 +134,31 @@ const Dashboard = () => {
             <div className={styled["data"]}>50000 VND</div>
           </div>
         </div>
+
+        {/* //List and Circular */}
         <div className={styled["stats"]}>
           <div className={styled["list-left"]}>
             <div className={styled["title"]}><CalendarOutlined style={{ paddingRight: '10px' }} /> Recent plans</div>
             {fake_plans}
           </div>
-          <div className={styled["list-right"]}>
-            <div className={styled["title"]}><UserAddOutlined style={{ paddingRight: '10px' }} /> Recent Registered Users</div>
+          <div className={styled["list-center"]}>
+            <div className={styled["title"]}><UserAddOutlined style={{ paddingRight: '10px' }} /> Recent users</div>
             {fake_users}
           </div>
+          <div className={styled["list-right"]}>
+            <div className={styled["title"]}><PieChartOutline style={{ paddingRight: '10px' }} /> Premium users percentage</div>
+            <div style={{ width: '60%', height: '60%', padding: 20 }}>
+              <CircularProgressbar value={2 / 7 * 100} text={`${28}%`}
+                styles={buildStyles({
+                  textColor: "black",
+                  pathColor: Color.main_red_color,
+                  trailColor: "#ebebeb"
+                })} />
+            </div>
+          </div>
         </div>
+        {/* //Chart */}
+        <Charts />
       </> :
         <div className={styled["top-container"]}>
           LOADING ...

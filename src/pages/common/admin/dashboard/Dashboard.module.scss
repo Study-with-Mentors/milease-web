@@ -1,3 +1,5 @@
+$primary-red: #ee5a5b;
+
 .main-container {
     max-height: 100vh;
     height: 100vh;
@@ -23,8 +25,8 @@
             color: white;
             padding: 10px 30px;
             font-weight: bold;
-            background-color: #ee5a5b;
-            border: 1px solid #ee5a5b;
+            background-color: $primary-red;
+            border: 1px solid $primary-red;
             border-radius: 20px;
         }
     }
@@ -37,14 +39,10 @@
         justify-content: space-between;
 
         .item-wrapper {
-            width: 20%;
+            width: 22%;
             background-color: white;
             padding: 20px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
-            .title {
-                font-size: 20px;
-            }
 
             .data {
                 font-size: 30px;
@@ -53,14 +51,11 @@
         }
 
         .list-left {
-            width: 60%;
+            width: 50%;
+            height: 300px;
             background-color: white;
             padding: 20px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
-            .title {
-                font-size: 20px;
-            }
 
             .data {
                 padding: 15px;
@@ -88,15 +83,12 @@
             }
         }
 
-        .list-right {
-            width: 30%;
+        .list-center {
+            width: 20%;
+            height: 300px;
             background-color: white;
             padding: 20px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
-            .title {
-                font-size: 20px;
-            }
 
             .data {
                 padding: 15px;
@@ -118,5 +110,42 @@
                 font-weight: 200;
             }
         }
+
+        .list-right {
+            width: 20%;
+            height: 300px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chart-left {
+            width: 47%;
+            height: 320px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .chart-right {
+            width: 47%;
+            height: 320px;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
     }
+}
+
+.title {
+    font-size: 20px;
 }
