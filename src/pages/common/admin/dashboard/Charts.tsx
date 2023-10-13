@@ -1,4 +1,4 @@
-import { Bar, Line, Pie } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,8 +12,9 @@ import {
   ArcElement,
 } from "chart.js";
 import styled from "./Dashboard.module.scss";
-import { BarChartOutlined, LineChartOutlined, LoadingOutlined, UserAddOutlined } from "@ant-design/icons";
+import { BarChartOutlined, LineChartOutlined } from "@ant-design/icons";
 import Color from "../../../../constants/Color";
+import { useState } from "react";
 
 ChartJS.register(
   CategoryScale,
@@ -37,58 +38,71 @@ const optionsBar = {
   },
 };
 
-const optionPie = {
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      position: "right" as const,
-    },
-  },
-}
 
-const labelsBar = ["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"];
-
-const dataBar = {
-  responsive: true,
-  labels: labelsBar,
-  datasets: [
-    {
-      data: [1, 2, 4, 7, 6, 8],
-      borderColor: Color.main_red_color,
-      backgroundColor: Color.main_red_color,
-    },
-  ],
-};
 
 const Charts = () => {
 
-  const dataPie = {
-    labels: ["Sociology", "Philosophy", "Math", "	Computer science", "Physics"],
+  const [labelBar, setLabelBar] = useState(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
+  const [data, setData] = useState([1, 3, 5, 4, 7, 3])
+  const [currentFilter, setCurrentFilter] = useState('month')
+
+  const dataBar = {
+    responsive: true,
+    labels: labelBar,
     datasets: [
       {
-        data: [1, 2, 2, 1, 4],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.5)",
-          "rgba(54, 162, 235, 0.5)",
-          "rgba(255, 206, 86, 0.5)",
-          "rgba(75, 192, 192, 0.5)",
-          "#EAA4FF",
-        ],
+        data: data,
+        borderColor: Color.main_red_color,
+        backgroundColor: Color.main_red_color,
       },
     ],
   };
 
+  const fillMonth = () => {
+    setCurrentFilter('month')
+    setLabelBar(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
+    setData([1, 3, 5, 4, 7, 3])
+  }
+
+  const fillWeek = () => {
+    setCurrentFilter('week')
+    setLabelBar(["01/10 - 07/10", "08/10 - 14/10", "15/10 - 21/10", "22/10 - 28/10", "29/10 - 31/10",])
+    setData([2, 5, 3, 6, 2])
+  }
+
   return (
     <div className={styled["stats"]}>
       <div className={styled["chart-left"]}>
-        <div className={styled["title"]}><LineChartOutlined style={{ paddingRight: '10px' }} /> Revenue Analysis</div>
+        <div className={styled["top-title"]}>
+          <div className={styled["title"]}><LineChartOutlined style={{ paddingRight: '10px' }} /> Revenue Analysis</div>
+          <div className={styled["buttons-container"]}>
+            <div className={styled["title"]}>Filter by</div>
+            <button className={styled["button"]} disabled={currentFilter === "month"} onClick={fillMonth}>
+              Month
+            </button>
+            <button className={styled["button"]} disabled={currentFilter === "week"} onClick={fillWeek}>
+              Week
+            </button>
+          </div>
+        </div>
         <div style={{ width: '85%', height: '85%', padding: 20 }}>
           <Line redraw data={dataBar} options={optionsBar} />
         </div>
       </div>
 
       <div className={styled["chart-right"]}>
-        <div className={styled["title"]}><BarChartOutlined style={{ paddingRight: '10px' }} /> User Analysis</div>
+        <div className={styled["top-title"]}>
+          <div className={styled["title"]}><LineChartOutlined style={{ paddingRight: '10px' }} /> User Analysis</div>
+          <div className={styled["buttons-container"]}>
+            <div className={styled["title"]}>Filter by</div>
+            <button className={styled["button"]} disabled={currentFilter === "month"} onClick={fillMonth}>
+              Month
+            </button>
+            <button className={styled["button"]} disabled={currentFilter === "week"} onClick={fillWeek}>
+              Week
+            </button>
+          </div>
+        </div>
         <div style={{ width: '85%', height: '85%', padding: 20 }}>
           <Bar redraw data={dataBar} options={optionsBar} />
         </div>

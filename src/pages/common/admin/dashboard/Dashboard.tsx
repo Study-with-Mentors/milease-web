@@ -95,7 +95,7 @@ const Dashboard = () => {
 
   const fake_users = Array.from({ length: 3 }, (_, index) => {
     return <div key={index} className={styled.data}>
-      <Avatar size={50} icon={<AntDesignOutlined />} />
+      {/* <Avatar size={50} icon={<AntDesignOutlined />} /> */}
       <div>
         <div className={styled.username}>{username[index]}</div>
         <div className={styled.userdes}>{userplace[index]}</div>
@@ -137,10 +137,10 @@ const Dashboard = () => {
 
         {/* //List and Circular */}
         <div className={styled["stats"]}>
-          <div className={styled["list-left"]}>
+          {/* <div className={styled["list-left"]}>
             <div className={styled["title"]}><CalendarOutlined style={{ paddingRight: '10px' }} /> Recent plans</div>
             {fake_plans}
-          </div>
+          </div> */}
           <div className={styled["list-center"]}>
             <div className={styled["title"]}><UserAddOutlined style={{ paddingRight: '10px' }} /> Recent users</div>
             {fake_users}
