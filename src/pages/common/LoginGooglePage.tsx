@@ -1,16 +1,13 @@
 import styled from "./LoginGooglePage.module.scss";
 import Milease from "../../assets/milease_logo.png";
 import AuthImage from "../../assets/login_signup_main.png"
-import GoogleIcon from "../../assets/google_icon.png";
-import { GoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginGoogle } from "../../hooks/useLoginGoogle";
 
 const LoginGooglePage = () => {
 
   const {
-    data: loginGoogleData,
-    error,
     mutate: loginGoogle,
   } = useLoginGoogle();
 
@@ -38,12 +35,12 @@ const LoginGooglePage = () => {
               onSuccess={credentialResponse => {
                 const token = credentialResponse.credential
                 loginGoogle(token!, {
-                  onSuccess(data, variables, context) {
+                  onSuccess(data) {
                     localStorage.setItem("access_token", data);
                     console.log("YEEEE")
                     navigate('/admin')
                   },
-                  onError(error, variables, context) {
+                  onError() {
                     console.log("Error")
                   },
                 });

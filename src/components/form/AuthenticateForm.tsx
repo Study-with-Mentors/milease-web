@@ -56,7 +56,7 @@ const renderPassword = ({ fieldProps }: any) => {
 };
 
 const renderCheckBox = ({ fieldProps }: any) => {
-  const { options, name, rules, style, label } = fieldProps;
+  const { options, name, rules, label } = fieldProps;
 
   return (
     <Form.Item

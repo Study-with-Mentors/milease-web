@@ -1,4 +1,4 @@
-import http, { toQueryParams } from "../utils/http";
+import http from "../utils/http";
 
 export const LoginGoogleAPI = {
     loginGoogle: async (token: string) => {

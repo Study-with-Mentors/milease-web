@@ -1,12 +1,10 @@
-import { UserOutlined, CalendarOutlined, TagOutlined, BankOutlined, UserAddOutlined, AntDesignOutlined } from "@ant-design/icons";
+import { UserOutlined, CalendarOutlined, TagOutlined, BankOutlined, UserAddOutlined } from "@ant-design/icons";
 import styled from "./Dashboard.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Logo from "../../../../assets/milease_logo.png"
-import { Avatar } from "antd";
 import {
   CircularProgressbar,
-  CircularProgressbarWithChildren,
   buildStyles
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -38,31 +36,6 @@ const Dashboard = () => {
     setRender(x => x + 1)
   }
 
-  const planStatus = [
-    "DRAFT",
-    "ON GOING",
-    "COMPLETED",
-    "CANCELLED",
-  ];
-
-  const planName = [
-    "Around Ho Chi Minh City",
-    "On to Da Nang",
-    "A trip in Ha Noi",
-    "Da Nang my beloved",
-    "Hoi An planning"
-  ];
-
-  const planDate = [
-    "Oct. 17 - Oct. 20",
-    "Oct. 10 - Oct. 22",
-    "Oct. 26 - Nov. 1",
-    "Oct. 6 - Oct. 15",
-    "Nov. 12 - Nov. 20",
-    "Dec. 17 - Dec. 20",
-    "Sep. 9 - Sep. 12",
-  ];
-
   const username = [
     "Quach Viet Son",
     "An Thai Sang",
@@ -78,20 +51,6 @@ const Dashboard = () => {
     "Viet Nam, Ha Noi",
     "Viet Nam, Quy Nhon",
   ]
-
-  const getRandomStatus = () => {
-    return planStatus[Math.floor(Math.random() * planStatus.length)];
-  };
-
-  const fake_plans = Array.from({ length: 3 }, (_, index) => {
-    return <div key={index} className={styled.data}>
-      <div>
-        <div className={styled.planname}>{planName[index]}</div>
-        <div className={styled.plandate}>{planDate[index]}</div>
-      </div>
-      <div className={styled.status}>{getRandomStatus()}</div>
-    </div>
-  });
 
   const fake_users = Array.from({ length: 3 }, (_, index) => {
     return <div key={index} className={styled.data}>

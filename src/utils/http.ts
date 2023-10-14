@@ -1,4 +1,3 @@
-import { notification } from "antd";
 import axios, { AxiosInstance } from "axios";
 
 class Http {

@@ -12,7 +12,7 @@ import {
   ArcElement,
 } from "chart.js";
 import styled from "./Dashboard.module.scss";
-import { BarChartOutlined, LineChartOutlined } from "@ant-design/icons";
+import { LineChartOutlined } from "@ant-design/icons";
 import Color from "../../../../constants/Color";
 import { useState } from "react";
 
