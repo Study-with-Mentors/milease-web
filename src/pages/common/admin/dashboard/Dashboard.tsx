@@ -8,9 +8,10 @@ import {
   buildStyles
 } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import Charts from "./Charts";
+import ChartRevenue from "./ChartRevenue";
 import { PieChartOutline } from "@mui/icons-material";
 import Color from "../../../../constants/Color";
+import ChartUser from "./ChartUser";
 
 const Dashboard = () => {
 
@@ -117,7 +118,10 @@ const Dashboard = () => {
           </div>
         </div>
         {/* //Chart */}
-        <Charts />
+        <div className={styled["stats"]}>
+          <ChartRevenue />
+          <ChartUser />
+        </div>
       </> :
         <div className={styled["top-container"]}>
           LOADING ...
