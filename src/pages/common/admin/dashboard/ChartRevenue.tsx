@@ -62,19 +62,19 @@ const ChartRevenue = () => {
   const fillMonth = () => {
     setCurrentFilter('month')
     setLabelBar(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
-    setData([1, 3, 5, 4, 7, 3])
+    setData([0, 0, 15000, 15000, 15000, 30000])
   }
 
   const fillWeek = () => {
     setCurrentFilter('week')
     setLabelBar(["01/10 - 07/10", "08/10 - 14/10", "15/10 - 21/10", "22/10 - 28/10", "29/10 - 31/10",])
-    setData([2, 5, 3, 6, 2])
+    setData([15000, 15000, 15000, 30000, 30000])
   }
 
   return (
     <div className={styled["chart-left"]}>
       <div className={styled["top-title"]}>
-        <div className={styled["title"]}><LineChartOutlined style={{ paddingRight: '10px' }} /> Revenue Analysis</div>
+        <div className={styled["title"]}><LineChartOutlined style={{ paddingRight: '10px' }} /> Revenue Analysis &#40;VND&#41;</div>
         <div className={styled["buttons-container"]}>
           <div className={styled["title"]}>Filter by</div>
           <button className={styled["button"]} disabled={currentFilter === "month"} onClick={fillMonth}>
