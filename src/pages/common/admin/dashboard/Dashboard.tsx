@@ -13,7 +13,6 @@ const Dashboard = () => {
 
   const [login, setLogin] = useState(false)
   const navigate = useNavigate();
-  const [render, setRender] = useState(0)
 
   document.title = "Dashboard"
 
@@ -25,12 +24,12 @@ const Dashboard = () => {
       setLogin(false)
       navigate('/auth')
     }
-  }, [render])
+  }, [])
 
   const onLogout = () => {
     localStorage.removeItem("access_token")
     setLogin(false)
-    setRender(x => x + 1)
+    navigate('/auth')
   }
 
   return (

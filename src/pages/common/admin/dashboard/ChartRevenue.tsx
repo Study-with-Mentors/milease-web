@@ -44,7 +44,7 @@ const ChartRevenue = () => {
 
   //Revenue
   const [labelBar, setLabelBar] = useState(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
-  const [data, setData] = useState([1, 3, 5, 4, 7, 3])
+  const [data, setData] = useState([0, 0, 15000, 15000, 15000, 30000])
   const [currentFilter, setCurrentFilter] = useState('month')
 
   const dataBar = {
