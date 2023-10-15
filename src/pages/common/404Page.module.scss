@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    background-image: url('../../assets/LoginBG.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
+
+    .body {
+        font-size: x-large;
+        width: 1000px;
+    }
+}

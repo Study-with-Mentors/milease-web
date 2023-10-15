@@ -4,6 +4,7 @@ import TravelPage from "../pages/common/TravelPage";
 import AboutPage from "../pages/common/AboutPage";
 import LoginGooglePage from "../pages/common/LoginGooglePage";
 import Dashboard from "../pages/common/admin/dashboard/Dashboard";
+import NotFoundPage from "../pages/common/404Page";
 
 const CommonRoute = () => {
 
@@ -16,22 +17,22 @@ const CommonRoute = () => {
     {
       path: "travel",
       element: <TravelPage />,
-      index: true,
     },
     {
       path: "about",
       element: <AboutPage />,
-      index: true,
     },
     {
       path: "auth",
       element: <LoginGooglePage />,
-      index: true,
     },
     {
       path: "admin",
       element: <Dashboard />,
-      index: true,
+    },
+    {
+      path: "*",
+      element: <NotFoundPage />,
     },
   ]);
   return element;
