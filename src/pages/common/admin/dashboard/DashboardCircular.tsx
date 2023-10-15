@@ -1,6 +1,6 @@
 import styled from "./Dashboard.module.scss";
 import "react-circular-progressbar/dist/styles.css";
-import { CircularProgressbar, CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
+import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import Color from "../../../../constants/Color";
 import { PieChartOutline } from "@mui/icons-material";
 import { useEffect, useState } from "react";
