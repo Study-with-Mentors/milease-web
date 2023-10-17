@@ -37,7 +37,6 @@ const LoginGooglePage = () => {
                 loginGoogle(token!, {
                   onSuccess(data) {
                     localStorage.setItem("access_token", data);
-                    console.log("YEEEE")
                     navigate('/admin')
                   },
                   onError() {

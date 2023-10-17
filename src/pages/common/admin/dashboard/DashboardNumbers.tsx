@@ -4,15 +4,33 @@ import "react-circular-progressbar/dist/styles.css";
 import { UseQueryResult, useQuery } from "react-query";
 import { UserAPI } from "../../../../apis/UserAPI";
 import { Spin } from "antd";
+import { PlanAPI } from "../../../../apis/PlanAPI";
+import Premium from "../../../../constants/Premium";
 
 const DashboardNumbers = () => {
 
     const {
-        // data: userCount,
+        data: userCount,
         isLoading: userLoading,
     }: UseQueryResult<number, Error> = useQuery(
         ["users"],
         async () => await UserAPI.getUserCount({})
+    );
+
+    const {
+        data: planCount,
+        isLoading: planLoading,
+    }: UseQueryResult<number, Error> = useQuery(
+        ["plans"],
+        async () => await PlanAPI.getPlanCount({})
+    );
+
+    const {
+        data: premiumUserCount,
+        isLoading: premiumUserLoading,
+    }: UseQueryResult<number, Error> = useQuery(
+        ["users"],
+        async () => await UserAPI.getUserPremiumCount({})
     );
 
     return (
@@ -20,25 +38,25 @@ const DashboardNumbers = () => {
             <div className={styled["item-wrapper"]}>
                 <div className={styled["title"]}><UserOutlined style={{ paddingRight: '10px' }} /> Total Users</div>
                 {userLoading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
-                    <div className={styled["data"]}>7</div>
+                    <div className={styled["data"]}>{userCount ? userCount : "No Data"}</div>
                 }
             </div>
             <div className={styled["item-wrapper"]}>
                 <div className={styled["title"]}><CalendarOutlined style={{ paddingRight: '10px' }} /> Plans Created</div>
-                {userLoading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
-                    <div className={styled["data"]}>20</div>
+                {planLoading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
+                    <div className={styled["data"]}>{planCount ? planCount : "No Data"}</div>
                 }
             </div>
             <div className={styled["item-wrapper"]}>
                 <div className={styled["title"]}><TagOutlined style={{ paddingRight: '10px' }} /> Premium Users</div>
-                {userLoading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
-                    <div className={styled["data"]}>2</div>
+                {premiumUserLoading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
+                    <div className={styled["data"]}>{premiumUserCount ? premiumUserCount : "No Data"}</div>
                 }
             </div>
             <div className={styled["item-wrapper"]}>
                 <div className={styled["title"]}><BankOutlined style={{ paddingRight: '10px' }} /> Revenue</div>
-                {userLoading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
-                    <div className={styled["data"]}>30000 VND</div>
+                {premiumUserLoading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
+                    <div className={styled["data"]}>{premiumUserCount ? premiumUserCount * Premium.premiumPrice + " VND" : "No Data"}</div>
                 }
             </div>
         </div>

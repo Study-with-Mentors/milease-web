@@ -34,4 +34,16 @@ export const UserAPI = {
     // console.log(res.data);
     return res.data;
   },
+  getUserPremiumCount: async (SearchUserParams: SearchUserParams) => {
+    var url;
+    if (Object.keys(SearchUserParams).length == 0) {
+      url = "/users/premium/count";
+    } else {
+      url = `/users/premium/count?${toQueryParams(SearchUserParams).toString()}`;
+    }
+
+    const res = await http.get(url);
+    // console.log(res.data);
+    return res.data;
+  },
 };
