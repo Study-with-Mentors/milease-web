@@ -1,3 +1,8 @@
+@font-face {
+	font-family: "PoppinsBold";
+	src: local("PoppinsBold"), url("../../../../fonts/Poppins-Bold.otf") format ("truetype");
+}
+
 $primary-red: #ee5a5b;
 
 .main-container {
@@ -72,17 +77,6 @@ $primary-red: #ee5a5b;
                 justify-content: space-between;
             }
 
-            .planname {
-                font-size: 20px;
-                padding-left: 10px;
-            }
-
-            .plandate {
-                font-size: 15px;
-                padding-left: 10px;
-                font-weight: 200;
-            }
-
             .status {
                 font-size: 20px;
             }
@@ -107,6 +101,7 @@ $primary-red: #ee5a5b;
             .username {
                 font-size: 20px;
                 padding-left: 20px;
+                font-family: "PoppinsBold";
             }
 
             .userdes {

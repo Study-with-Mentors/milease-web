@@ -9,6 +9,21 @@ export type SearchUserParams = {
   upperDate?: string;
 };
 
+export type GetUserResult = {
+  id: number,
+  fullName: string,
+  imageUrl: string,
+  createdTime: string,
+  premium: boolean
+}
+
+export type GetUserPagingResult = {
+  totalPages: number,
+  totalCount: number,
+  currentPage: number,
+  values: GetUserResult[]
+}
+
 export const UserAPI = {
   getAll: async (SearchUserParams: SearchUserParams) => {
     var url;
@@ -19,7 +34,7 @@ export const UserAPI = {
     }
 
     const res = await http.get(url);
-    // console.log(res.data);
+    console.log(res.data);
     return res.data;
   },
   getUserCount: async (SearchUserParams: SearchUserParams) => {
@@ -34,12 +49,12 @@ export const UserAPI = {
     // console.log(res.data);
     return res.data;
   },
-  getUserPremiumCount: async (SearchUserParams: SearchUserParams) => {
+  getUserPremiumCount: async (searchUserParams: SearchUserParams) => {
     var url;
-    if (Object.keys(SearchUserParams).length == 0) {
+    if (Object.keys(searchUserParams).length == 0) {
       url = "/users/premium/count";
     } else {
-      url = `/users/premium/count?${toQueryParams(SearchUserParams).toString()}`;
+      url = `/users/premium/count?${toQueryParams(searchUserParams).toString()}`;
     }
 
     const res = await http.get(url);

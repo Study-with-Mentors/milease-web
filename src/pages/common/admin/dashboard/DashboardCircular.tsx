@@ -24,7 +24,7 @@ const DashboardCircular = () => {
     data: premiumUserCount,
     isLoading: premiumUserLoading,
   }: UseQueryResult<number, Error> = useQuery(
-    ["users"],
+    ["premium"],
     async () => await UserAPI.getUserPremiumCount({})
   );
 
@@ -34,7 +34,7 @@ const DashboardCircular = () => {
     var premium = premiumUserCount ? premiumUserCount : 0
     if (premiumUserLoading && userLoading) {
       setLoading(true)
-    } else if (users != 0 && premium != 0) {
+    } else if (users != 0 || premium != 0) {
       setCal(Math.round(premium / users * 100))
       setLoading(false)
     } else {
@@ -56,7 +56,7 @@ const DashboardCircular = () => {
           <>
             {loading ? <div style={{ fontSize: '25px' }}>Loading ...</div> :
               cal === 0 ?
-                <div style={{ fontSize: '35px' }}>No Data</div>
+                <div style={{ fontSize: '50px' }}>0%</div>
                 :
                 <div style={{ fontSize: '50px' }}>{cal}%</div>
             }
