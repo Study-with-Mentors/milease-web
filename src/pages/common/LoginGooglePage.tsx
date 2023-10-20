@@ -34,6 +34,9 @@ const LoginGooglePage = () => {
             <GoogleLogin
               onSuccess={credentialResponse => {
                 const token = credentialResponse.credential
+                if (token) {
+                  localStorage.setItem("google_jwt_token", token);
+                }
                 loginGoogle(token!, {
                   onSuccess(data) {
                     localStorage.setItem("access_token", data);

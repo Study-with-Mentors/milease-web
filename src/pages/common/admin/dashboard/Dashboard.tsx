@@ -8,6 +8,12 @@ import ChartUser from "./ChartUser";
 import DashboardNumbers from "./DashboardNumbers";
 import DashboardList from "./DashboardList";
 import DashboardCircular from "./DashboardCircular";
+import jwt_decode from "jwt-decode";
+interface JWTGoogleToken {
+  name: string;
+  email: string;
+  picture: string;
+}
 
 const Dashboard = () => {
 
@@ -18,8 +24,14 @@ const Dashboard = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("access_token")
-    if (token) {
-      setLogin(true)
+    const google_jwt_token = localStorage.getItem("google_jwt_token")
+    if (token && google_jwt_token) {
+      var decoded = jwt_decode<JWTGoogleToken>(google_jwt_token);
+      if (decoded && decoded.email === "mileasexe@gmail.com") {
+        setLogin(true)
+      } else {
+        navigate('/')
+      }
     } else {
       setLogin(false)
       navigate('/auth')
