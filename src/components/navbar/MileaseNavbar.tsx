@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 export const MileaseNavbar = () => {
 
     const [login, setLogin] = useState(false)
-    const [render, setRender] = useState(0)
 
     useEffect(() => {
         const token = localStorage.getItem("access_token")
@@ -15,13 +14,7 @@ export const MileaseNavbar = () => {
         } else {
             setLogin(false)
         }
-    }, [render])
-
-    const onLogout = () => {
-        localStorage.removeItem("access_token")
-        setLogin(false)
-        setRender(x => x + 1)
-    }
+    }, [])
 
     return (
         <div className={styled["container-main"]}>
@@ -48,9 +41,9 @@ export const MileaseNavbar = () => {
                     <Link to={'/auth'} className={styled["loginLink"]}>
                         Login
                     </Link> :
-                    <button className={styled["logoutLink"]} onClick={onLogout}>
-                        Logout
-                    </button>
+                    <Link to={'/admin'} className={styled["logoutLink"]}>
+                        Profile
+                    </Link>
                 }
                 <Link to={'/auth'} className={styled["downloadLink"]}>
                     Download our app

@@ -46,7 +46,7 @@ const ChartRevenue = () => {
   //Revenue
   const [labelBar, setLabelBar] = useState(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
   const [data, setData] = useState([0, 0, 15000, 15000, 15000, 30000])
-  const [dataChange, setDataChange] = useState([0, 0, 15000, 15000, 15000, 30000])
+  const [dataChange, setDataChange] = useState([0, 0, 15000, 0, 0, 15000])
   const [filter, setFilter] = useState('month')
   const [mode, setMode] = useState('total')
 
@@ -55,16 +55,26 @@ const ChartRevenue = () => {
     labels: labelBar,
     datasets: [
       {
-        data: data,
+        data: mode == "total" ? data : dataChange,
         borderColor: Color.main_red_color,
         backgroundColor: Color.main_red_color,
       },
     ],
   };
 
+  //For initialize
   useEffect(() => {
 
   }, [])
+
+  //For switching mode or switching filter, set new changeData when main data changed
+  useEffect(() => {
+    let newChangeData = [data[0]];
+    for (let i = 1; i < data.length; i++) {
+      newChangeData.push(data[i] - data[i - 1])
+    }
+    setDataChange(newChangeData)
+  }, [data])
 
   const fillMonth = () => {
     setFilter('month')

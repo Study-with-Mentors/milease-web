@@ -14,7 +14,7 @@ import {
 import styled from "./Dashboard.module.scss";
 import { BarChartOutlined } from "@ant-design/icons";
 import Color from "../../../../constants/Color";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DatePicker } from "antd";
 
 ChartJS.register(
@@ -53,10 +53,33 @@ const ChartUser = () => {
 
   const [dataChange, setDataChange] = useState([0, 1, 3, 3, 4, 7])
   const [dataPremium, setDataPremium] = useState([0, 0, 0, 1, 1, 2])
-  const [dataPremiumChange, setdataPremiumChange] = useState([0, 0, 0, 1, 1, 2])
+  const [dataPremiumChange, setDataPremiumChange] = useState([0, 0, 0, 1, 1, 2])
 
   const [filter, setFilter] = useState('month')
   const [mode, setMode] = useState('total')
+
+  //For initialize
+  useEffect(() => {
+
+  }, [])
+
+  //For user change
+  useEffect(() => {
+    let newChangeData = [data[0]];
+    for (let i = 1; i < data.length; i++) {
+      newChangeData.push(data[i] - data[i - 1])
+    }
+    setDataChange(newChangeData)
+  }, [data])
+
+  //For premium change
+  useEffect(() => {
+    let newPremiumChangeData = [dataPremium[0]];
+    for (let i = 1; i < dataPremium.length; i++) {
+      newPremiumChangeData.push(dataPremium[i] - dataPremium[i - 1])
+    }
+    setDataPremiumChange(newPremiumChangeData)
+  }, [dataPremium])
 
   const dataBar = {
     responsive: true,
@@ -64,13 +87,13 @@ const ChartUser = () => {
     datasets: [
       {
         label: "Users",
-        data: data,
+        data: mode == "total" ? data : dataChange,
         borderColor: Color.main_red_color,
         backgroundColor: Color.main_red_color,
       },
       {
         label: "Premium Users",
-        data: dataPremium,
+        data: mode == "total" ? dataPremium : dataPremiumChange,
         borderColor: Color.dark_blue_color,
         backgroundColor: Color.dark_blue_color,
       },
@@ -104,7 +127,7 @@ const ChartUser = () => {
       <div className={styled["top-title"]}>
         <div className={styled["title-chart"]}><BarChartOutlined style={{ paddingRight: '10px' }} /> User Analysis</div>
         <div className={styled["buttons-container"]}>
-        <div className={styled["title-chart"]}>Mode</div>
+          <div className={styled["title-chart"]}>Mode</div>
           <button className={styled["button"]} disabled={mode === "total"} onClick={modeTotal}>
             Total
           </button>
