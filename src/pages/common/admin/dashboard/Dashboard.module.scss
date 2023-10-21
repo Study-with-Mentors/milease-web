@@ -146,6 +146,15 @@ $primary-red: #ee5a5b;
             align-items: center;
         }
 
+        .des-title {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 100%;
+            align-items: center;
+            margin-top: 10px;
+        }
+
         .buttons-container {
             display: flex;
             flex-direction: row;
@@ -154,13 +163,18 @@ $primary-red: #ee5a5b;
 
             .button {
                 border-radius: 20px;
-                margin: 0 10px;
+                margin: 0 5px;
+                background-color: white;
+                color: black;
+                border: 1px solid black;
+                font-size: 15px;
+                padding: 5px 15px;
             }
 
             .button:disabled {
                 border-radius: 20px;
                 background-color: #424242;
-                color: #c0c0c0;
+                color: white;
                 pointer-events: none;
             }
         }
@@ -169,4 +183,8 @@ $primary-red: #ee5a5b;
 
 .title {
     font-size: 20px;
+}
+
+.title-chart {
+    font-size: 17px;
 }
