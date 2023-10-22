@@ -45,8 +45,8 @@ const ChartRevenue = () => {
 
   //Revenue
   const [labelBar, setLabelBar] = useState(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
-  const [data, setData] = useState([0, 0, 15000, 15000, 15000, 30000])
-  const [dataChange, setDataChange] = useState([0, 0, 15000, 0, 0, 15000])
+  const [data, setData] = useState([0, 0, 15000, 15000, 15000, 45000])
+  const [dataChange, setDataChange] = useState([0, 0, 15000, 0, 0, 30000])
   const [filter, setFilter] = useState('month')
   const [mode, setMode] = useState('total')
 
@@ -79,13 +79,13 @@ const ChartRevenue = () => {
   const fillMonth = () => {
     setFilter('month')
     setLabelBar(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
-    setData([0, 0, 15000, 15000, 15000, 30000])
+    setData([0, 0, 15000, 15000, 15000, 45000])
   }
 
   const fillWeek = () => {
     setFilter('week')
     setLabelBar(["01/10 - 07/10", "08/10 - 14/10", "15/10 - 21/10", "22/10 - 28/10", "29/10 - 31/10",])
-    setData([15000, 15000, 15000, 30000, 30000])
+    setData([15000, 15000, 30000, 30000, 45000])
   }
 
   const modeTotal = () => {
@@ -111,7 +111,7 @@ const ChartRevenue = () => {
         </div>
       </div>
       <div className={styled["des-title"]}>
-        <RangePicker />
+        <RangePicker disabled/>
         <div className={styled["buttons-container"]}>
           <div className={styled["title-chart"]}>Filter by</div>
           <button className={styled["button"]} disabled={filter === "month"} onClick={fillMonth}>

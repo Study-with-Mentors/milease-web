@@ -49,11 +49,12 @@ const ChartUser = () => {
 
   //User
   const [labelBar, setLabelBar] = useState(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
-  const [data, setData] = useState([0, 1, 3, 3, 4, 7])
 
-  const [dataChange, setDataChange] = useState([0, 1, 3, 3, 4, 7])
-  const [dataPremium, setDataPremium] = useState([0, 0, 0, 1, 1, 2])
-  const [dataPremiumChange, setDataPremiumChange] = useState([0, 0, 0, 1, 1, 2])
+  const [data, setData] = useState([0, 1, 3, 4, 7, 10])
+  const [dataChange, setDataChange] = useState([0, 1, 2, 1, 3, 3])
+
+  const [dataPremium, setDataPremium] = useState([0, 0, 1, 1, 2, 3])
+  const [dataPremiumChange, setDataPremiumChange] = useState([0, 0, 1, 0, 1, 1])
 
   const [filter, setFilter] = useState('month')
   const [mode, setMode] = useState('total')
@@ -103,15 +104,15 @@ const ChartUser = () => {
   const fillMonth = () => {
     setFilter('month')
     setLabelBar(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
-    setData([0, 1, 3, 3, 4, 7])
-    setDataPremium([0, 0, 0, 1, 1, 2])
+    setData([0, 1, 3, 4, 7, 10])
+    setDataPremium([0, 0, 1, 1, 2, 3])
   }
 
   const fillWeek = () => {
     setFilter('week')
     setLabelBar(["01/10 - 07/10", "08/10 - 14/10", "15/10 - 21/10", "22/10 - 28/10", "29/10 - 31/10",])
-    setData([4, 4, 4, 7, 7])
-    setDataPremium([1, 1, 1, 2, 2])
+    setData([4, 4, 5, 7, 10])
+    setDataPremium([1, 1, 2, 2, 3])
   }
 
   const modeTotal = () => {
@@ -137,7 +138,7 @@ const ChartUser = () => {
         </div>
       </div>
       <div className={styled["des-title"]}>
-        <RangePicker />
+        <RangePicker disabled/>
         <div className={styled["buttons-container"]}>
           <div className={styled["title-chart"]}>Filter by</div>
           <button className={styled["button"]} disabled={filter === "month"} onClick={fillMonth}>

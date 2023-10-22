@@ -56,7 +56,7 @@ const DashboardNumbers = () => {
             <div className={styled["item-wrapper"]}>
                 <div className={styled["title"]}><BankOutlined style={{ paddingRight: '10px' }} /> Revenue</div>
                 {premiumUserLoading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
-                    <div className={styled["data"]}>{premiumUserCount ? premiumUserCount * Premium.premiumPrice + " VND" : 0}</div>
+                    <div className={styled["data"]}>{premiumUserCount ? premiumUserCount * Premium.premiumPrice + " VND" : "0 VND"}</div>
                 }
             </div>
         </div>
