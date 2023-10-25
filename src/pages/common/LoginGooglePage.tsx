@@ -4,6 +4,21 @@ import AuthImage from "../../assets/login_signup_main.png"
 import { GoogleLogin } from '@react-oauth/google';
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginGoogle } from "../../hooks/useLoginGoogle";
+import jwtDecode from "jwt-decode";
+import { Spin, notification } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { useState } from 'react'
+
+interface JWTData {
+  sub: string,
+  id: number,
+  role: string,
+  iat?: number,
+  exp?: number,
+  traveler_status: string
+}
+
+type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 const LoginGooglePage = () => {
 
@@ -12,47 +27,73 @@ const LoginGooglePage = () => {
   } = useLoginGoogle();
 
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotificationWithIcon = (type: NotificationType, message: string, description: string) => {
+    api[type]({
+      message: message,
+      description: description,
+    });
+  };
 
   return (
     <>
+      {contextHolder}
       <div className={styled["container-main"]}>
         <div className={styled["image-container"]}>
           <img src={AuthImage} alt="AuthImage" className={styled["auth-image"]} />
         </div>
-        <div className={styled["container"]}>
-          <Link to={"/"} style={{ textDecoration: "none" }}>
-            <img src={Milease} alt="MileaseLogo" className={styled["logo"]} />
-          </Link>
-          <div style={{ fontSize: '30px', color: 'black', fontWeight: 'bold' }}>Hello there!</div>
-          <div style={{ fontSize: '20px', color: '#9E9E9E', marginBottom: '30px' }}>Let’s explore further to your personal experience</div>
-          {/* <div className={styled["button-wrapper"]}>
+        <Spin spinning={loading} tip="Loading..." indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} >
+          <div className={styled["container"]}>
+            <Link to={"/"} style={{ textDecoration: "none" }}>
+              <img src={Milease} alt="MileaseLogo" className={styled["logo"]} />
+            </Link>
+            <div style={{ fontSize: '30px', color: 'black', fontWeight: 'bold' }}>Hello there!</div>
+            <div style={{ fontSize: '20px', color: '#9E9E9E', marginBottom: '30px' }}>Let’s explore further to your personal experience</div>
+            {/* <div className={styled["button-wrapper"]}>
             <button className={styled["btn"]}>
               <img className={styled["icon"]} src={GoogleIcon} alt="" /> Login with Google
             </button>
           </div> */}
-          <div className={styled["button-wrapper"]}>
-            <GoogleLogin
-              onSuccess={credentialResponse => {
-                const token = credentialResponse.credential
-                if (token) {
-                  localStorage.setItem("google_jwt_token", token);
-                }
-                loginGoogle(token!, {
-                  onSuccess(data) {
-                    localStorage.setItem("access_token", data);
-                    navigate('/admin')
-                  },
-                  onError() {
-                    console.log("Error")
-                  },
-                });
-              }}
-              onError={() => {
-                console.log('Login Failed');
-              }}
-            />
+            <div className={styled["button-wrapper"]}>
+              <GoogleLogin
+                size="large"
+                onSuccess={credentialResponse => {
+                  setLoading(true)
+                  const token = credentialResponse.credential
+                  if (token) {
+                    localStorage.setItem("google_jwt_token", token);
+                  }
+                  loginGoogle(token!, {
+                    onSuccess(data) {
+                      setLoading(false)
+                      openNotificationWithIcon('success', 'Success', `Login sucessful!`)
+                      localStorage.setItem("access_token", data);
+                      var decode = jwtDecode<JWTData>(data)
+                      // console.log(data)
+                      if (decode.role == "ADMIN") {
+                        navigate('/admin')
+                      } else {
+                        navigate('/')
+                      }
+                    },
+                    onError() {
+                      setLoading(false)
+                      openNotificationWithIcon('error', `Login failed`, `There's an error trying to login to your Google account`)
+                      console.log("Error")
+                    },
+                  });
+                }}
+                onError={() => {
+                  setLoading(false)
+                  openNotificationWithIcon('error', `Login failed`, `There's an error trying to login to your Google account`)
+                  console.log('Login Failed');
+                }}
+              />
+            </div>
           </div>
-        </div>
+        </Spin>
       </div>
     </>
   );

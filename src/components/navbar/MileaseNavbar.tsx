@@ -18,7 +18,7 @@ export const MileaseNavbar = () => {
     }, [])
 
     const onLogout = () => {
-        localStorage.removeItem("access_token")
+        localStorage.clear()
         setLogin(false)
         navigate('/auth')
     }
