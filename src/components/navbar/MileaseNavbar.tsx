@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import styled from "./MileaseNavbar.module.scss";
 import Logo from "../../assets/milease_icon.png"
 import { useEffect, useState } from "react";
@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 export const MileaseNavbar = () => {
 
     const [login, setLogin] = useState(false)
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("access_token")
@@ -15,6 +16,12 @@ export const MileaseNavbar = () => {
             setLogin(false)
         }
     }, [])
+
+    const onLogout = () => {
+        localStorage.removeItem("access_token")
+        setLogin(false)
+        navigate('/auth')
+    }
 
     return (
         <div className={styled["container-main"]}>
@@ -41,9 +48,14 @@ export const MileaseNavbar = () => {
                     <Link to={'/auth'} className={styled["loginLink"]}>
                         Login
                     </Link> :
-                    <Link to={'/admin'} className={styled["logoutLink"]}>
-                        Profile
-                    </Link>
+                    <>
+                        <Link to={'/admin'} className={styled["logoutLink"]}>
+                            Profile
+                        </Link>
+                        <button className={styled["logoutLink"]} onClick={onLogout}>
+                            Logout
+                        </button>
+                    </>
                 }
                 <Link to={'/auth'} className={styled["downloadLink"]}>
                     Download our app
