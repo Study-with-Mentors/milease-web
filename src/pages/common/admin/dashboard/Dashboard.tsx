@@ -15,6 +15,15 @@ interface JWTGoogleToken {
   picture: string;
 }
 
+interface JWTData {
+  sub: string,
+  id: number,
+  role: string,
+  iat?: number,
+  exp?: number,
+  traveler_status: string
+}
+
 const Dashboard = () => {
 
   const [login, setLogin] = useState(false)
@@ -27,7 +36,8 @@ const Dashboard = () => {
     const google_jwt_token = localStorage.getItem("google_jwt_token")
     if (token && google_jwt_token) {
       var decoded = jwt_decode<JWTGoogleToken>(google_jwt_token);
-      if (decoded && decoded.email === "mileasexe@gmail.com") {
+      var decodedToken = jwt_decode<JWTData>(token);
+      if (decoded && decodedToken.role == "ADMIN") {
         setLogin(true)
       } else {
         navigate('/')
