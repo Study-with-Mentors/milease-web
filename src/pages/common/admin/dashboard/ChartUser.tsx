@@ -12,10 +12,10 @@ import {
   ArcElement,
 } from "chart.js";
 import styled from "./Dashboard.module.scss";
-import { BarChartOutlined } from "@ant-design/icons";
+import { BarChartOutlined, LoadingOutlined } from "@ant-design/icons";
 import Color from "../../../../constants/Color";
 import { useEffect, useState } from "react";
-import { DatePicker } from "antd";
+import { DatePicker, Spin } from "antd";
 
 ChartJS.register(
   CategoryScale,
@@ -50,18 +50,28 @@ const ChartUser = () => {
   //User
   const [labelBar, setLabelBar] = useState(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
 
-  const [data, setData] = useState([0, 1, 3, 4, 7, 10])
-  const [dataChange, setDataChange] = useState([0, 1, 2, 1, 3, 3])
+  const [data, setData] = useState<number[]>([])
+  const [dataChange, setDataChange] = useState<number[]>([])
 
-  const [dataPremium, setDataPremium] = useState([0, 0, 1, 1, 2, 3])
-  const [dataPremiumChange, setDataPremiumChange] = useState([0, 0, 1, 0, 1, 1])
+  const [dataPremium, setDataPremium] = useState<number[]>([])
+  const [dataPremiumChange, setDataPremiumChange] = useState<number[]>([])
 
   const [filter, setFilter] = useState('month')
   const [mode, setMode] = useState('total')
 
+  const [loading, setLoading] = useState(false)
+
   //For initialize
   useEffect(() => {
+    setLoading(true)
+    setTimeout(function () {
+      setData([0, 1, 3, 4, 7, 10])
+      setDataChange([0, 1, 2, 1, 3, 3])
 
+      setDataPremium([0, 0, 1, 1, 2, 3])
+      setDataPremiumChange([0, 0, 1, 0, 1, 1])
+      setLoading(false)
+    }, 3000);
   }, [])
 
   //For user change
@@ -138,7 +148,7 @@ const ChartUser = () => {
         </div>
       </div>
       <div className={styled["des-title"]}>
-        <RangePicker disabled/>
+        <RangePicker disabled />
         <div className={styled["buttons-container"]}>
           <div className={styled["title-chart"]}>Filter by</div>
           <button className={styled["button"]} disabled={filter === "month"} onClick={fillMonth}>
@@ -150,7 +160,9 @@ const ChartUser = () => {
         </div>
       </div>
       <div style={{ width: '85%', height: '85%', padding: 20 }}>
-        <Bar redraw data={dataBar} options={optionsBar} />
+        {loading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
+          <Bar redraw data={dataBar} options={optionsBar} />
+        }
       </div>
     </div>
   );

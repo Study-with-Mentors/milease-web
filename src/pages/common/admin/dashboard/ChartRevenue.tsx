@@ -12,10 +12,10 @@ import {
   ArcElement,
 } from "chart.js";
 import styled from "./Dashboard.module.scss";
-import { LineChartOutlined } from "@ant-design/icons";
+import { LineChartOutlined, LoadingOutlined } from "@ant-design/icons";
 import Color from "../../../../constants/Color";
 import { useEffect, useState } from "react";
-import { DatePicker } from "antd";
+import { DatePicker, Spin } from "antd";
 
 ChartJS.register(
   CategoryScale,
@@ -45,10 +45,11 @@ const ChartRevenue = () => {
 
   //Revenue
   const [labelBar, setLabelBar] = useState(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
-  const [data, setData] = useState([0, 0, 15000, 15000, 15000, 45000])
-  const [dataChange, setDataChange] = useState([0, 0, 15000, 0, 0, 30000])
+  const [data, setData] = useState<number[]>([])
+  const [dataChange, setDataChange] = useState<number[]>([])
   const [filter, setFilter] = useState('month')
   const [mode, setMode] = useState('total')
+  const [loading, setLoading] = useState(false)
 
   const dataBar = {
     responsive: true,
@@ -64,7 +65,12 @@ const ChartRevenue = () => {
 
   //For initialize
   useEffect(() => {
-
+    setLoading(true)
+    setTimeout(function () {
+      setData([0, 0, 15000, 15000, 15000, 45000])
+      setDataChange([0, 0, 15000, 0, 0, 30000])
+      setLoading(false)
+    }, 3000);
   }, [])
 
   //For switching mode or switching filter, set new changeData when main data changed
@@ -111,7 +117,7 @@ const ChartRevenue = () => {
         </div>
       </div>
       <div className={styled["des-title"]}>
-        <RangePicker disabled/>
+        <RangePicker disabled />
         <div className={styled["buttons-container"]}>
           <div className={styled["title-chart"]}>Filter by</div>
           <button className={styled["button"]} disabled={filter === "month"} onClick={fillMonth}>
@@ -123,7 +129,9 @@ const ChartRevenue = () => {
         </div>
       </div>
       <div style={{ width: '85%', height: '85%', padding: 20 }}>
-        <Line redraw data={dataBar} options={optionsBar} />
+        {loading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
+          <Line redraw data={dataBar} options={optionsBar} />
+        }
       </div>
     </div>
   );
