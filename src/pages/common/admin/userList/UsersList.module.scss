@@ -1,0 +1,95 @@
+$primary-red: #ee5a5b;
+$dark_blue_color: #2160AF;
+
+.back-button {
+    color: black;
+    background-color: transparent;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: larger;
+}
+
+.premium {
+    background-color: #86e49d;
+    color: #006b21;
+    text-align: center;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.freemium {
+    background-color: #ebc474;
+    color: #5A5A24;
+    text-align: center;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.stats {
+    width: 95%;
+    max-height: calc(89% - 1.6rem);
+    margin: 20px auto;
+
+    .spin {
+        padding: 10px 0 0 10px;
+    }
+
+    .page-button {
+        background-color: transparent;
+        color: black;
+        border: 1px solid transparent;
+        font-size: 20px;
+    }
+
+    .page-button:active,
+    .page-button:focus {
+        border: 0px solid transparent;
+    }
+
+    .page-button:disabled {
+        pointer-events: none;
+        border: 1px solid transparent;
+    }
+
+    table {
+        width: 100%;
+        text-align: left;
+        border-collapse: collapse;
+        background-color: white;
+
+        thead {
+            th {
+                background-color: $dark_blue_color;
+                padding: 10px 20px;
+                text-transform: capitalize;
+                color: white;
+            }
+        }
+
+        tbody {
+            tr {
+                --delay: .1s;
+                transition: .5s ease-in-out var(--delay), background-color 0s;
+            }
+
+            tr:nth-child(even) {
+                background-color: #0000000b;
+            }
+
+            tr td {
+                padding: 10px 20px;
+            }
+        }
+    }
+
+    .ava-name {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+
+        .username {
+            padding-left: 10px;
+        }
+    }
+}

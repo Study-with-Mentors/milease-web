@@ -5,6 +5,8 @@ import { UseQueryResult, useQuery } from "react-query";
 import { GetUserPagingResult, UserAPI } from "../../../../apis/UserAPI";
 import { Avatar, Spin } from "antd";
 import { removeVietnameseTones } from "../../../../utils/vietnamesefont";
+import Color from "../../../../constants/Color";
+import { Link } from "react-router-dom";
 
 const DashboardList = () => {
     const {
@@ -17,7 +19,10 @@ const DashboardList = () => {
 
     return (
         <div className={styled["list-center"]}>
-            <div className={styled["title"]}><UserAddOutlined style={{ paddingRight: '10px' }} /> Recent users</div>
+            <div className={styled["top-title"]}>
+                <div className={styled["title"]}><UserAddOutlined style={{ paddingRight: '10px' }} /> Recent users</div>
+                <Link to={'/admin/users'} className={styled["title"]} style={{ color: Color.dark_blue_color, fontWeight: '600' }}> View more</Link>
+            </div>
             <>
                 {userListLoading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
                     userList?.values?.slice(0, 3).map((items) => (

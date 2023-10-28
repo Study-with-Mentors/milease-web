@@ -1,171 +1,139 @@
 $primary-red: #ee5a5b;
 
-.main-container {
-    max-height: 170vh;
-    height: 170vh;
-    background-color: #f2f4f5;
-    padding: 30px 50px;
-    color: black;
+.stats {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-    .top-container {
+    .item-wrapper {
+        width: 21%;
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+
+        .spin {
+            padding: 10px 0 0 10px;
+        }
+
+        .data {
+            font-size: 30px;
+            font-weight: bold;
+        }
+    }
+
+    .list-left {
+        width: 50%;
+        height: 300px;
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+        .data {
+            padding: 15px;
+            font-weight: bold;
+            border-bottom: solid 1px #919191;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .status {
+            font-size: 20px;
+        }
+    }
+
+    .list-center {
+        width: 74%;
+        height: 300px;
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+        .data {
+            padding: 15px;
+            font-weight: bold;
+            border-bottom: solid 1px #919191;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .username {
+            font-size: 20px;
+            padding-left: 20px;
+        }
+
+        .userdes {
+            font-size: 15px;
+            padding-left: 20px;
+            font-weight: 200;
+        }
+    }
+
+    .list-right {
+        width: 20%;
+        height: 300px;
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .chart {
+        width: 100%;
+        height: 400px;
+        background-color: white;
+        padding: 20px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .top-title {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        align-items: center;
+    }
+
+    .des-title {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .buttons-container {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
 
-        .top-title {
-            display: flex;
-            flex-direction: row;
-            align-content: center;
-            font-size: 40px;
-            font-weight: bold;
-        }
-
-        .logout-button {
-            color: white;
-            padding: 10px 30px;
-            font-weight: bold;
-            background-color: $primary-red;
-            border: 1px solid $primary-red;
+        .button {
             border-radius: 20px;
-        }
-    }
-
-    .stats {
-        margin-top: 20px;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-
-        .item-wrapper {
-            width: 21%;
+            margin: 0 5px;
             background-color: white;
-            padding: 20px;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
-            
-            .spin {
-                padding: 10px 0 0 10px;
-            }
-
-            .data {
-                font-size: 30px;
-                font-weight: bold;
-            }
+            color: black;
+            border: 1px solid black;
+            font-size: 13px;
+            padding: 5px 15px;
         }
 
-        .list-left {
-            width: 50%;
-            height: 300px;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
-            .data {
-                padding: 15px;
-                font-weight: bold;
-                border-bottom: solid 1px #919191;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-            }
-
-            .status {
-                font-size: 20px;
-            }
-        }
-
-        .list-center {
-            width: 74%;
-            height: 300px;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-
-            .data {
-                padding: 15px;
-                font-weight: bold;
-                border-bottom: solid 1px #919191;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-            }
-
-            .username {
-                font-size: 20px;
-                padding-left: 20px;
-            }
-
-            .userdes {
-                font-size: 15px;
-                padding-left: 20px;
-                font-weight: 200;
-            }
-        }
-
-        .list-right {
-            width: 20%;
-            height: 300px;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .chart {
-            width: 100%;
-            height: 400px;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .top-title {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            width: 100%;
-            align-items: center;
-        }
-
-        .des-title {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            width: 100%;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .buttons-container {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center;
-
-            .button {
-                border-radius: 20px;
-                margin: 0 5px;
-                background-color: white;
-                color: black;
-                border: 1px solid black;
-                font-size: 13px;
-                padding: 5px 15px;
-            }
-
-            .button:disabled {
-                border-radius: 20px;
-                background-color: #424242;
-                color: white;
-                pointer-events: none;
-            }
+        .button:disabled {
+            border-radius: 20px;
+            background-color: #424242;
+            color: white;
+            pointer-events: none;
         }
     }
 }

@@ -5,6 +5,8 @@ import AboutPage from "../pages/common/AboutPage";
 import LoginGooglePage from "../pages/common/LoginGooglePage";
 import Dashboard from "../pages/common/admin/dashboard/Dashboard";
 import NotFoundPage from "../pages/common/404Page";
+import UsersList from "../pages/common/admin/userList/UsersList";
+import AdminAuthorize from "../pages/common/admin/AdminAuthorize";
 
 const CommonRoute = () => {
 
@@ -28,7 +30,17 @@ const CommonRoute = () => {
     },
     {
       path: "admin",
-      element: <Dashboard />,
+      element: <AdminAuthorize />,
+      children: [
+        {
+          path: "",
+          element: <Dashboard />
+        },
+        {
+          path: "users",
+          element: <UsersList />
+        }
+      ]
     },
     {
       path: "*",
