@@ -134,7 +134,7 @@ const ChartUser = () => {
   }
 
   return (
-    <div className={styled["chart-right"]}>
+    <div className={styled["chart"]}>
       <div className={styled["top-title"]}>
         <div className={styled["title-chart"]}><BarChartOutlined style={{ paddingRight: '10px' }} /> User Analysis</div>
         <div className={styled["buttons-container"]}>

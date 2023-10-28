@@ -1,8 +1,8 @@
 $primary-red: #ee5a5b;
 
 .main-container {
-    max-height: 120vh;
-    height: 120vh;
+    max-height: 170vh;
+    height: 170vh;
     background-color: #f2f4f5;
     padding: 30px 50px;
     color: black;
@@ -116,20 +116,9 @@ $primary-red: #ee5a5b;
             align-items: center;
         }
 
-        .chart-left {
-            width: 47%;
-            height: 320px;
-            background-color: white;
-            padding: 20px;
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .chart-right {
-            width: 47%;
-            height: 320px;
+        .chart {
+            width: 100%;
+            height: 400px;
             background-color: white;
             padding: 20px;
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
@@ -167,7 +156,7 @@ $primary-red: #ee5a5b;
                 background-color: white;
                 color: black;
                 border: 1px solid black;
-                font-size: 15px;
+                font-size: 13px;
                 padding: 5px 15px;
             }
 

@@ -81,6 +81,8 @@ const Dashboard = () => {
         {/* //Chart */}
         <div className={styled["stats"]}>
           <ChartRevenue />
+        </div>
+        <div className={styled["stats"]}>
           <ChartUser />
         </div>
       </> :

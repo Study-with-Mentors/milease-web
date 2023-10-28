@@ -16,6 +16,9 @@ import { LineChartOutlined, LoadingOutlined } from "@ant-design/icons";
 import Color from "../../../../constants/Color";
 import { useEffect, useState } from "react";
 import { DatePicker, Spin } from "antd";
+import { RangePickerProps } from "antd/es/date-picker";
+import dayjs, { Dayjs } from "dayjs";
+import { getMonthsAndYearsInRange } from "../../../../utils/dateFormat";
 
 ChartJS.register(
   CategoryScale,
@@ -41,15 +44,21 @@ const optionsBar = {
   },
 };
 
+const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+  // Can not select days before today and today
+  return current < dayjs('2023-10-01') || current > dayjs().endOf('day')
+};
+
 const ChartRevenue = () => {
 
   //Revenue
-  const [labelBar, setLabelBar] = useState(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
+  const [labelBar, setLabelBar] = useState<string[]>([])
   const [data, setData] = useState<number[]>([])
   const [dataChange, setDataChange] = useState<number[]>([])
   const [filter, setFilter] = useState('month')
   const [mode, setMode] = useState('total')
   const [loading, setLoading] = useState(false)
+  const [dateRange, setDateRange] = useState([new Date('2023-10-01').toISOString(), new Date().toISOString()])
 
   const dataBar = {
     responsive: true,
@@ -63,12 +72,13 @@ const ChartRevenue = () => {
     ],
   };
 
-  //For initialize
+  //For initialize, run only once
   useEffect(() => {
     setLoading(true)
-    setTimeout(function () {
-      setData([0, 0, 15000, 15000, 15000, 45000])
-      setDataChange([0, 0, 15000, 0, 0, 30000])
+    setLabelBar(getMonthsAndYearsInRange('2023-05-01', (new Date()).toISOString()))
+    setData([0, 0, 15000, 15000, 15000, 45000])
+    setDataChange([0, 0, 15000, 0, 0, 30000])
+    setTimeout(() => {
       setLoading(false)
     }, 3000);
   }, [])
@@ -102,8 +112,21 @@ const ChartRevenue = () => {
     setMode('change')
   }
 
+  //For Range Picker
+  const handleRangeChange = (values: [Dayjs | null, Dayjs | null] | null, formatString: [string, string]) => {
+    if (values) {
+      setDateRange(formatString)
+    }
+  };
+
+  //Ok Date Click
+  const onOKDateClick = () => {
+    console.log([new Date(dateRange[0]).toISOString(), new Date(dateRange[1]).toISOString()])
+    setLabelBar(getMonthsAndYearsInRange((new Date(dateRange[0])).toISOString(), (new Date(dateRange[1])).toISOString()))
+  }
+
   return (
-    <div className={styled["chart-left"]}>
+    <div className={styled["chart"]}>
       <div className={styled["top-title"]}>
         <div className={styled["title-chart"]}><LineChartOutlined style={{ paddingRight: '10px' }} /> Revenue Analysis &#40;VND&#41;</div>
         <div className={styled["buttons-container"]}>
@@ -117,7 +140,14 @@ const ChartRevenue = () => {
         </div>
       </div>
       <div className={styled["des-title"]}>
-        <RangePicker disabled />
+
+        {/* Date Picker */}
+        <div>
+          <RangePicker onChange={handleRangeChange} disabledDate={disabledDate}
+            defaultValue={[dayjs('2023-10-01'), dayjs().endOf('day')]} />
+          <button style={{ borderRadius: '5px', padding: '3px 10px', marginLeft: '5px' }} onClick={onOKDateClick}>OK</button>
+        </div>
+
         <div className={styled["buttons-container"]}>
           <div className={styled["title-chart"]}>Filter by</div>
           <button className={styled["button"]} disabled={filter === "month"} onClick={fillMonth}>
