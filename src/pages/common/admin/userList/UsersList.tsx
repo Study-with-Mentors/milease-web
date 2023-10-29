@@ -6,8 +6,13 @@ import { AntDesignOutlined, LoadingOutlined } from "@ant-design/icons";
 import { removeVietnameseTones } from "../../../../utils/vietnamesefont";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import Color from "../../../../constants/Color";
+import { useApprove } from "../../../../hooks/useApprove";
 
 const UsersList = () => {
+
+    const { mutate: approvePremium } = useApprove();
+
     const {
         data: userListPage2,
         isLoading: userListPage2Loading,
@@ -47,7 +52,7 @@ const UsersList = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {userList?.values?.map((items) => (
+                                {userList?.values?.slice().reverse().map((items) => (
                                     <tr key={items.id}>
                                         <td>{items.id}</td>
                                         <td>
@@ -63,7 +68,26 @@ const UsersList = () => {
                                                 <div className={styled["freemium"]}>Freemium</div>
                                             }
                                         </td>
-                                        <td>{items.premium ? "" : "Approve"}</td>
+                                        <td style={{textAlign: 'center'}}>
+                                            {!items.premium ?
+                                                <button style={{ padding: '5px 20px', backgroundColor: Color.main_red_color, borderRadius: 0 }}
+                                                    onClick={() => {
+                                                        approvePremium([items.id], {
+                                                            onSuccess() {
+                                                                refetch;
+                                                                refetch1;
+                                                                console.log("OK")
+                                                            },
+                                                            onError() {
+                                                                console.log("Error")
+                                                            },
+                                                        })
+                                                    }}>
+                                                    Approve
+                                                </button>
+                                                : <></>
+                                            }
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -97,7 +121,26 @@ const UsersList = () => {
                                                 <div className={styled["freemium"]}>Freemium</div>
                                             }
                                         </td>
-                                        <td>{items.premium ? "" : "Approve"}</td>
+                                        <td style={{textAlign: 'center'}}>
+                                            {!items.premium ?
+                                                <button style={{ padding: '5px 20px', backgroundColor: Color.main_red_color, borderRadius: 0 }}
+                                                    onClick={() => {
+                                                        approvePremium([items.id], {
+                                                            onSuccess() {
+                                                                refetch;
+                                                                refetch1;
+                                                                console.log("OK")
+                                                            },
+                                                            onError() {
+                                                                console.log("Error")
+                                                            },
+                                                        })
+                                                    }}>
+                                                    Approve
+                                                </button>
+                                                : <></>
+                                            }
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
