@@ -16,6 +16,7 @@ const UsersList = () => {
     const {
         data: userList,
         isLoading: userListLoading,
+        isFetching: userListFetching,
         refetch
     }: UseQueryResult<GetUserPagingResult, Error> = useQuery(
         ["userList"],
@@ -26,12 +27,12 @@ const UsersList = () => {
 
     const onPageUp = () => {
         setPage(a => a + 1)
-        refetch;
+        refetch();
     }
 
     const onPageDown = () => {
         setPage(a => a - 1)
-        refetch;
+        refetch();
     }
 
     return (
@@ -40,7 +41,7 @@ const UsersList = () => {
                 &#60; Back to Dashboard
             </Link>
             <div className={styled["stats"]}>
-                {userListLoading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
+                {(userListLoading || userListFetching) ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
                     <>
                         <table>
                             <thead>
@@ -70,11 +71,11 @@ const UsersList = () => {
                                             }
                                         </td>
                                         <td style={{ textAlign: 'center' }}>
-                                            <button style={{ padding: '5px 20px', backgroundColor: Color.main_red_color, borderRadius: 0 }}
+                                            {/* <button style={{ padding: '5px 20px', backgroundColor: Color.main_red_color, borderRadius: 0 }}
                                                 onClick={() => {
                                                     approvePremium([items.id], {
                                                         onSuccess() {
-                                                            refetch;
+                                                            refetch();
                                                             console.log("OK")
                                                         },
                                                         onError() {
@@ -83,13 +84,13 @@ const UsersList = () => {
                                                     })
                                                 }}>
                                                 Approve
-                                            </button>
-                                            {/* {!items.premium ?
+                                            </button> */}
+                                            {!items.premium ?
                                                 <button style={{ padding: '5px 20px', backgroundColor: Color.main_red_color, borderRadius: 0 }}
                                                     onClick={() => {
                                                         approvePremium([items.id], {
                                                             onSuccess() {
-                                                                refetch;
+                                                                refetch();
                                                                 console.log("OK")
                                                             },
                                                             onError() {
@@ -100,7 +101,7 @@ const UsersList = () => {
                                                     Approve
                                                 </button>
                                                 : <></>
-                                            } */}
+                                            }
                                         </td>
                                     </tr>
                                 ))}

@@ -25,7 +25,7 @@ function App() {
         }}
       >
         <QueryClientProvider client={queryClient}>
-          <GoogleOAuthProvider clientId="660757934763-6rcnn61l2ctd81jdk15fb0prmda55u9u.apps.googleusercontent.com">
+          <GoogleOAuthProvider clientId={process.env.VITE_GOOGLE_CLIENT as string}>
             <BrowserRouter>
               <AppRoute />
             </BrowserRouter>

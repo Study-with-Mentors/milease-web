@@ -4,7 +4,7 @@ class Http {
   instance: AxiosInstance;
   constructor() {
     this.instance = axios.create({
-      baseURL: "https://milease-api.azurewebsites.net/api/",
+      baseURL: process.env.VITE_SERVER_LINK,
       timeout: 10000,
       headers: {
         "Content-Type": "application/json",

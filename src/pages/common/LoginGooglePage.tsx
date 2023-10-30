@@ -71,7 +71,7 @@ const LoginGooglePage = () => {
                       openNotificationWithIcon('success', 'Success', `Login sucessful!`)
                       localStorage.setItem("access_token", data);
                       var decode = jwtDecode<JWTData>(data)
-                      // console.log(data)
+                      console.log(data)
                       if (decode.role == "ADMIN") {
                         navigate('/admin')
                       } else {
