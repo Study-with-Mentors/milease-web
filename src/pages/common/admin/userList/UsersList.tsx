@@ -111,6 +111,7 @@ const UsersList = () => {
                                     value={pageSize}
                                     onChange={
                                         (event) => {
+                                            setPage(0)
                                             setPageSize(Number(event.target.value))
                                             refetch();
                                         }
