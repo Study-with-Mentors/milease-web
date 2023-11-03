@@ -11,6 +11,9 @@ import { useApprove } from "../../../../hooks/useApprove";
 
 const UsersList = () => {
 
+    const [page, setPage] = useState(0)
+    const [pageSize, setPageSize] = useState(5)
+
     const { mutate: approvePremium } = useApprove();
 
     const {
@@ -19,11 +22,9 @@ const UsersList = () => {
         isFetching: userListFetching,
         refetch
     }: UseQueryResult<GetUserPagingResult, Error> = useQuery(
-        ["userList"],
-        async () => await UserAPI.getAll({})
+        ["userList", page, pageSize],
+        async () => await UserAPI.getAll({ page, pageSize })
     );
-
-    const [page, setPage] = useState(1)
 
     const onPageUp = () => {
         setPage(a => a + 1)
@@ -32,6 +33,16 @@ const UsersList = () => {
 
     const onPageDown = () => {
         setPage(a => a - 1)
+        refetch();
+    }
+
+    const onFirstPage = () => {
+        setPage(0)
+        refetch();
+    }
+
+    const onLastPage = () => {
+        setPage(userList?.totalPages as number - 1)
         refetch();
     }
 
@@ -71,20 +82,6 @@ const UsersList = () => {
                                             }
                                         </td>
                                         <td style={{ textAlign: 'center' }}>
-                                            {/* <button style={{ padding: '5px 20px', backgroundColor: Color.main_red_color, borderRadius: 0 }}
-                                                onClick={() => {
-                                                    approvePremium([items.id], {
-                                                        onSuccess() {
-                                                            refetch();
-                                                            console.log("OK")
-                                                        },
-                                                        onError() {
-                                                            console.log("Error")
-                                                        },
-                                                    })
-                                                }}>
-                                                Approve
-                                            </button> */}
                                             {!items.premium ?
                                                 <button style={{ padding: '5px 20px', backgroundColor: Color.main_red_color, borderRadius: 0 }}
                                                     onClick={() => {
@@ -107,14 +104,37 @@ const UsersList = () => {
                                 ))}
                             </tbody>
                         </table>
-                        <div style={{ textAlign: 'right' }}>
-                            <button className={styled["page-button"]} disabled={page === 1}
-                                onClick={onPageDown}>&#60;
-                            </button>
-                            <span style={{ fontSize: '20px', padding: '0 10px' }}>{page}</span>
-                            <button className={styled["page-button"]} disabled={page === 2}
-                                onClick={onPageUp}>&#62;
-                            </button>
+                        <div className={styled["footer-table"]}>
+                            <div style={{ fontSize: '20px' }}>
+                                <span>Page size:</span>
+                                <select
+                                    value={pageSize}
+                                    onChange={
+                                        (event) => {
+                                            setPageSize(Number(event.target.value))
+                                            refetch();
+                                        }
+                                    }>
+                                    <option value={5}> 5 </option>
+                                    <option value={8}> 8 </option>
+                                    <option value={10}> 10 </option>
+                                </select>
+                            </div>
+                            <div>
+                                <button className={styled["page-button"]} disabled={page === 0}
+                                    onClick={onFirstPage}>&#60;&#60;
+                                </button>
+                                <button className={styled["page-button"]} disabled={page === 0}
+                                    onClick={onPageDown}>&#60;
+                                </button>
+                                <span style={{ fontSize: '20px', padding: '0 10px' }}>{(page + 1)}</span>
+                                <button className={styled["page-button"]} disabled={page === (userList?.totalPages as number - 1)}
+                                    onClick={onPageUp}>&#62;
+                                </button>
+                                <button className={styled["page-button"]} disabled={page === (userList?.totalPages as number - 1)}
+                                    onClick={onLastPage}>&#62;&#62;
+                                </button>
+                            </div>
                         </div>
                     </>
                 }

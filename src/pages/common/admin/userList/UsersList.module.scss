@@ -49,6 +49,7 @@ $dark_blue_color: #2160AF;
     .page-button:disabled {
         pointer-events: none;
         border: 1px solid transparent;
+        color: rgb(196, 196, 196);
     }
 
     table {
@@ -92,4 +93,23 @@ $dark_blue_color: #2160AF;
             padding-left: 10px;
         }
     }
+
+    .footer-table {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+select {
+    appearance: none;
+    /* safari */
+    -webkit-appearance: none;
+    /* other styles for aesthetics */
+    font-size: 20px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #fff;
+    border: 1px solid #caced1;
+    color: #000;
+    cursor: pointer;
 }
