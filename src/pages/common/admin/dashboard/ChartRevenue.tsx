@@ -18,7 +18,9 @@ import { useEffect, useState } from "react";
 import { DatePicker, Spin } from "antd";
 import { RangePickerProps } from "antd/es/date-picker";
 import dayjs, { Dayjs } from "dayjs";
-import { getMonthsAndYearsInRange } from "../../../../utils/dateFormat";
+import { getMonthsAndYearsLabelBar, splitDateRangeInWeeks, getWeekLabelBar } from "../../../../utils/dateFormat";
+import { useQueries } from "react-query";
+import { SearchUserParams, UserAPI } from "../../../../apis/UserAPI";
 
 ChartJS.register(
   CategoryScale,
@@ -51,14 +53,17 @@ const disabledDate: RangePickerProps['disabledDate'] = (current) => {
 
 const ChartRevenue = () => {
 
-  //Revenue
+  const [fetchParams, setFetchParams] = useState<SearchUserParams[]>(splitDateRangeInWeeks(new Date('2023-10-01'), new Date()))
+  const [fetchDateRange, setFetchDateRange] = useState([new Date('2023-10-01').toISOString(), new Date().toISOString()])
+
   const [labelBar, setLabelBar] = useState<string[]>([])
   const [data, setData] = useState<number[]>([])
   const [dataChange, setDataChange] = useState<number[]>([])
   const [filter, setFilter] = useState('month')
   const [mode, setMode] = useState('total')
-  const [loading, setLoading] = useState(false)
   const [dateRange, setDateRange] = useState([new Date('2023-10-01').toISOString(), new Date().toISOString()])
+
+  const [chartLoading, setChartLoading] = useState<boolean>(false)
 
   const dataBar = {
     responsive: true,
@@ -72,36 +77,50 @@ const ChartRevenue = () => {
     ],
   };
 
-  //For initialize, run only once
+  //Premium User Data
+  const usersCountArr = useQueries(
+    fetchParams.map(result => {
+      return {
+        queryKey: ['user', result.lowerDate, result.upperDate],
+        queryFn: async () => await UserAPI.getUserCount({
+          lowerDate: result.lowerDate,
+          upperDate: result.upperDate,
+        }),
+      }
+    })
+  )
+
+  //For initialize
   useEffect(() => {
-    setLoading(true)
-    setLabelBar(getMonthsAndYearsInRange('2023-05-01', (new Date()).toISOString()))
-    setData([0, 0, 15000, 15000, 15000, 45000])
+    setChartLoading(true)
+    setFilter('month')
+    setLabelBar(getMonthsAndYearsLabelBar('2023-06-01', (new Date()).toISOString()))
     setDataChange([0, 0, 15000, 0, 0, 30000])
-    setTimeout(() => {
-      setLoading(false)
-    }, 3000);
   }, [])
 
-  //For switching mode or switching filter, set new changeData when main data changed
+  //For switching mode or switching filter, set new 'total' when 'change' changed
   useEffect(() => {
-    let newChangeData = [data[0]];
-    for (let i = 1; i < data.length; i++) {
-      newChangeData.push(data[i] - data[i - 1])
-    }
-    setDataChange(newChangeData)
-  }, [data])
+    const newTotal = dataChange.map((_, index, array) => {
+      // Use array.slice(0, index + 1) to get a subarray containing elements up to the current index
+      const subArray = array.slice(0, index + 1);
+      // Calculate the sum of the subArray
+      const sum = subArray.reduce((acc, currentValue) => acc + currentValue, 0);
+      return sum;
+    });
+    setData(newTotal)
+    setChartLoading(false)
+  }, [dataChange])
 
   const fillMonth = () => {
     setFilter('month')
     setLabelBar(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
-    setData([0, 0, 15000, 15000, 15000, 45000])
+    setDataChange([0, 0, 15000, 0, 0, 30000])
   }
 
   const fillWeek = () => {
     setFilter('week')
-    setLabelBar(["01/10 - 07/10", "08/10 - 14/10", "15/10 - 21/10", "22/10 - 28/10", "29/10 - 31/10",])
-    setData([15000, 15000, 30000, 30000, 45000])
+    setLabelBar(getWeekLabelBar(new Date(fetchDateRange[0]), new Date(fetchDateRange[1])))
+    setDataChange(usersCountArr.map((obj) => obj.data * 15000))
   }
 
   const modeTotal = () => {
@@ -112,17 +131,19 @@ const ChartRevenue = () => {
     setMode('change')
   }
 
-  //For Range Picker
+  //For Range Picker, only change data when click OK
   const handleRangeChange = (values: [Dayjs | null, Dayjs | null] | null, formatString: [string, string]) => {
     if (values) {
       setDateRange(formatString)
     }
   };
 
-  //Ok Date Click
+  //Ok Date Click, set new date range, then refetch everything
   const onOKDateClick = () => {
-    console.log([new Date(dateRange[0]).toISOString(), new Date(dateRange[1]).toISOString()])
-    setLabelBar(getMonthsAndYearsInRange((new Date(dateRange[0])).toISOString(), (new Date(dateRange[1])).toISOString()))
+    setFilter('month')
+    setMode('total')
+    setFetchParams(splitDateRangeInWeeks(new Date(dateRange[0]), new Date(dateRange[1])))
+    setFetchDateRange(dateRange)
   }
 
   return (
@@ -159,7 +180,9 @@ const ChartRevenue = () => {
         </div>
       </div>
       <div style={{ width: '85%', height: '85%', padding: 20 }}>
-        {loading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
+        {chartLoading || usersCountArr.every(item => item.status !== "success" || data.length == 0 || dataChange.length == 0) ?
+          <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} />
+          :
           <Line redraw data={dataBar} options={optionsBar} />
         }
       </div>
