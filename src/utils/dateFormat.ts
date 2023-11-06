@@ -36,7 +36,7 @@ export function getMonthsAndYearsLabelBar(startDate: string, endDate: string) {
     const dateArray = [];
     let currentDate = new Date(startDate);
 
-    while (currentDate <= new Date(endDate)) {
+    while (currentDate.getMonth() <= (new Date(endDate)).getMonth()) {
         dateArray.push(getMonthShortNameYearDate(currentDate));
         currentDate.setMonth(currentDate.getMonth() + 1);
     }
@@ -122,14 +122,15 @@ export function getWeekLabelBar(lowerDate: Date, upperDate: Date): string[] {
     }
 
     while (currentMonday < upperDate) {
-        console.log(upperDate)
         const nextMonday = new Date(currentMonday);
         nextMonday.setDate(nextMonday.getDate() + 7);
-        if (nextMonday > upperDate) {
-            nextMonday.setDate(upperDate.getDate() + 1);
+        if (nextMonday.getFullYear() >= upperDate.getFullYear() && nextMonday.getMonth() >= upperDate.getMonth() && nextMonday.getDate() >= upperDate.getDate()) {
+            rangeLabels.push(getDateMonthDate(currentMonday) + " - " + getDateMonthDate(upperDate));
+            break;
+        } else {
+            rangeLabels.push(getDateMonthDate(currentMonday) + " - " + getDateMonthDate(nextMonday));
         }
-        rangeLabels.push(getDateMonthDate(currentMonday) + " - " + getDateMonthDate(nextMonday));
-        currentMonday = nextMonday;
+        currentMonday = new Date(nextMonday);
     }
 
     return rangeLabels;

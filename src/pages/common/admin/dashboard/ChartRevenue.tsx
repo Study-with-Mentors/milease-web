@@ -59,7 +59,7 @@ const ChartRevenue = () => {
   const [labelBar, setLabelBar] = useState<string[]>([])
   const [data, setData] = useState<number[]>([])
   const [dataChange, setDataChange] = useState<number[]>([])
-  const [filter, setFilter] = useState('month')
+  const [filter, setFilter] = useState('none')
   const [mode, setMode] = useState('total')
   const [dateRange, setDateRange] = useState([new Date('2023-10-01').toISOString(), new Date().toISOString()])
 
@@ -90,14 +90,6 @@ const ChartRevenue = () => {
     })
   )
 
-  //For initialize
-  useEffect(() => {
-    setChartLoading(true)
-    setFilter('month')
-    setLabelBar(getMonthsAndYearsLabelBar('2023-06-01', (new Date()).toISOString()))
-    setDataChange([0, 0, 15000, 0, 0, 30000])
-  }, [])
-
   //For switching mode or switching filter, set new 'total' when 'change' changed
   useEffect(() => {
     const newTotal = dataChange.map((_, index, array) => {
@@ -113,7 +105,7 @@ const ChartRevenue = () => {
 
   const fillMonth = () => {
     setFilter('month')
-    setLabelBar(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
+    setLabelBar(getMonthsAndYearsLabelBar(fetchDateRange[0], fetchDateRange[1]))
     setDataChange([0, 0, 15000, 0, 0, 30000])
   }
 
@@ -140,8 +132,8 @@ const ChartRevenue = () => {
 
   //Ok Date Click, set new date range, then refetch everything
   const onOKDateClick = () => {
-    setFilter('month')
-    setMode('total')
+    setChartLoading(true)
+    setFilter('none')
     setFetchParams(splitDateRangeInWeeks(new Date(dateRange[0]), new Date(dateRange[1])))
     setFetchDateRange(dateRange)
   }
@@ -180,7 +172,7 @@ const ChartRevenue = () => {
         </div>
       </div>
       <div style={{ width: '85%', height: '85%', padding: 20 }}>
-        {chartLoading || usersCountArr.every(item => item.status !== "success" || data.length == 0 || dataChange.length == 0) ?
+        {chartLoading ?
           <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} />
           :
           <Line redraw data={dataBar} options={optionsBar} />
