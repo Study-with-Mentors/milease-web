@@ -160,6 +160,7 @@ const ChartRevenue = () => {
     setLabelBar([])
     setDataChange([])
     setFetchParams(splitDateRangeInWeeks(new Date(dateRange[0]), new Date(dateRange[1])))
+    setFetchParamsMonth(splitDateRangeInMonths(new Date(dateRange[0]), new Date(dateRange[1])))
     setFetchDateRange(dateRange)
   }
 
