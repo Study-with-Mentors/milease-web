@@ -16,6 +16,11 @@ import { BarChartOutlined, LoadingOutlined } from "@ant-design/icons";
 import Color from "../../../../constants/Color";
 import { useEffect, useState } from "react";
 import { DatePicker, Spin } from "antd";
+import { RangePickerProps } from "antd/es/date-picker";
+import dayjs, { Dayjs } from "dayjs";
+import { SearchUserParams, UserAPI } from "../../../../apis/UserAPI";
+import { getMonthsAndYearsLabelBar, getWeekLabelBar, splitDateRangeInMonths, splitDateRangeInWeeks } from "../../../../utils/dateFormat";
+import { useQueries } from "react-query";
 
 ChartJS.register(
   CategoryScale,
@@ -45,9 +50,17 @@ const optionsBar = {
 
 const { RangePicker } = DatePicker;
 
+const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+  // Can not select days before today and today
+  return current < dayjs('2023-10-01') || current > dayjs().endOf('day')
+};
+
 const ChartUser = () => {
 
-  //User
+  const [fetchParams, setFetchParams] = useState<SearchUserParams[]>(splitDateRangeInWeeks(new Date('2023-10-01'), new Date()))
+  const [fetchParamsMonth, setFetchParamsMonth] = useState<SearchUserParams[]>(splitDateRangeInMonths(new Date('2023-10-01'), new Date()))
+  const [fetchDateRange, setFetchDateRange] = useState([new Date('2023-10-01').toISOString(), new Date().toISOString()])
+
   const [labelBar, setLabelBar] = useState(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
 
   const [data, setData] = useState<number[]>([])
@@ -56,41 +69,10 @@ const ChartUser = () => {
   const [dataPremium, setDataPremium] = useState<number[]>([])
   const [dataPremiumChange, setDataPremiumChange] = useState<number[]>([])
 
-  const [filter, setFilter] = useState('month')
+  const [filter, setFilter] = useState('none')
   const [mode, setMode] = useState('total')
 
-  const [loading, setLoading] = useState(false)
-
-  //For initialize
-  useEffect(() => {
-    setLoading(true)
-    setTimeout(function () {
-      setData([0, 1, 3, 4, 7, 10])
-      setDataChange([0, 1, 2, 1, 3, 3])
-
-      setDataPremium([0, 0, 1, 1, 2, 3])
-      setDataPremiumChange([0, 0, 1, 0, 1, 1])
-      setLoading(false)
-    }, 3000);
-  }, [])
-
-  //For user change
-  useEffect(() => {
-    let newChangeData = [data[0]];
-    for (let i = 1; i < data.length; i++) {
-      newChangeData.push(data[i] - data[i - 1])
-    }
-    setDataChange(newChangeData)
-  }, [data])
-
-  //For premium change
-  useEffect(() => {
-    let newPremiumChangeData = [dataPremium[0]];
-    for (let i = 1; i < dataPremium.length; i++) {
-      newPremiumChangeData.push(dataPremium[i] - dataPremium[i - 1])
-    }
-    setDataPremiumChange(newPremiumChangeData)
-  }, [dataPremium])
+  const [dateRange, setDateRange] = useState([new Date('2023-10-01').toISOString(), new Date().toISOString()])
 
   const dataBar = {
     responsive: true,
@@ -111,18 +93,113 @@ const ChartUser = () => {
     ],
   };
 
+  //User Data
+  //User Week
+  const usersCountArr = useQueries(
+    fetchParams.map(result => {
+      return {
+        queryKey: ['user', result.lowerDate, result.upperDate],
+        queryFn: async () => await UserAPI.getUserCount({
+          lowerDate: result.lowerDate,
+          upperDate: result.upperDate,
+        }),
+      }
+    })
+  )
+
+  //User Month
+  const usersCountArrMonth = useQueries(
+    fetchParamsMonth.map(result => {
+      return {
+        queryKey: ['userMonth', result.lowerDate, result.upperDate],
+        queryFn: async () => await UserAPI.getUserCount({
+          lowerDate: result.lowerDate,
+          upperDate: result.upperDate,
+        }),
+      }
+    })
+  )
+
+  //Premium Week
+  const usersPremiumCountArr = useQueries(
+    fetchParams.map(result => {
+      return {
+        queryKey: ['userPremium', result.lowerDate, result.upperDate],
+        queryFn: async () => await UserAPI.getUserPremiumCount({
+          lowerDate: result.lowerDate,
+          upperDate: result.upperDate,
+        }),
+      }
+    })
+  )
+
+  //Premium Month
+  const usersPremiumCountArrMonth = useQueries(
+    fetchParamsMonth.map(result => {
+      return {
+        queryKey: ['userPremiumMonth', result.lowerDate, result.upperDate],
+        queryFn: async () => await UserAPI.getUserPremiumCount({
+          lowerDate: result.lowerDate,
+          upperDate: result.upperDate,
+        }),
+      }
+    })
+  )
+
+  useEffect(() => {
+    usersCountArr.forEach(e => {
+      e.refetch();
+    });
+    usersPremiumCountArr.forEach(e => {
+      e.refetch();
+    });
+  }, [fetchParams])
+
+  useEffect(() => {
+    usersCountArrMonth.forEach(e => {
+      e.refetch();
+    });
+    usersPremiumCountArrMonth.forEach(e => {
+      e.refetch();
+    });
+  }, [fetchParamsMonth])
+
+  //For user change
+  useEffect(() => {
+    const newTotal = dataChange.map((_, index, array) => {
+      // Use array.slice(0, index + 1) to get a subarray containing elements up to the current index
+      const subArray = array.slice(0, index + 1);
+      // Calculate the sum of the subArray
+      const sum = subArray.reduce((acc, currentValue) => acc + currentValue, 0);
+      return sum;
+    });
+    setData(newTotal)
+  }, [dataChange])
+
+  //For premium change
+  useEffect(() => {
+    const newTotal = dataPremiumChange.map((_, index, array) => {
+      // Use array.slice(0, index + 1) to get a subarray containing elements up to the current index
+      const subArray = array.slice(0, index + 1);
+      // Calculate the sum of the subArray
+      const sum = subArray.reduce((acc, currentValue) => acc + currentValue, 0);
+      return sum;
+    });
+    setDataPremium(newTotal)
+  }, [dataPremiumChange])
+
   const fillMonth = () => {
     setFilter('month')
-    setLabelBar(["May 2023", "Jun 2023", "Jul 2023", "Aug 2023", "Sep 2023", "Oct 2023"])
-    setData([0, 1, 3, 4, 7, 10])
-    setDataPremium([0, 0, 1, 1, 2, 3])
+    setLabelBar(getMonthsAndYearsLabelBar(fetchDateRange[0], fetchDateRange[1]))
+    setDataChange(usersCountArrMonth.map((obj) => obj.data))
+    setDataPremiumChange(usersPremiumCountArrMonth.map((obj) => obj.data))
   }
 
   const fillWeek = () => {
     setFilter('week')
-    setLabelBar(["01/10 - 07/10", "08/10 - 14/10", "15/10 - 21/10", "22/10 - 28/10", "29/10 - 31/10",])
-    setData([4, 4, 5, 7, 10])
-    setDataPremium([1, 1, 2, 2, 3])
+    setLabelBar(getWeekLabelBar(new Date(fetchDateRange[0]), new Date(fetchDateRange[1])))
+    setDataChange(usersCountArr.map((obj) => obj.data))
+    setDataPremiumChange(usersPremiumCountArr.map((obj) => obj.data))
   }
 
   const modeTotal = () => {
@@ -131,6 +208,24 @@ const ChartUser = () => {
 
   const modeChange = () => {
     setMode('change')
+  }
+
+  //For Range Picker, only change data when click OK
+  const handleRangeChange = (values: [Dayjs | null, Dayjs | null] | null, formatString: [string, string]) => {
+    if (values) {
+      setDateRange(formatString)
+    }
+  };
+
+  //Ok Date Click, set new date range, then refetch everything
+  const onOKDateClick = () => {
+    setFilter('none')
+    setLabelBar([])
+    setDataChange([])
+    setDataPremiumChange([])
+    setFetchParams(splitDateRangeInWeeks(new Date(dateRange[0]), new Date(dateRange[1])))
+    setFetchParamsMonth(splitDateRangeInMonths(new Date(dateRange[0]), new Date(dateRange[1])))
+    setFetchDateRange(dateRange)
   }
 
   return (
@@ -148,7 +243,14 @@ const ChartUser = () => {
         </div>
       </div>
       <div className={styled["des-title"]}>
-        <RangePicker disabled />
+
+        {/* Date Picker */}
+        <div>
+          <RangePicker onChange={handleRangeChange} disabledDate={disabledDate}
+            defaultValue={[dayjs('2023-10-01'), dayjs().endOf('day')]} />
+          <button style={{ borderRadius: '5px', padding: '3px 10px', marginLeft: '5px' }} onClick={onOKDateClick}>OK</button>
+        </div>
+
         <div className={styled["buttons-container"]}>
           <div className={styled["title-chart"]}>Filter by</div>
           <button className={styled["button"]} disabled={filter === "month"} onClick={fillMonth}>
@@ -160,8 +262,11 @@ const ChartUser = () => {
         </div>
       </div>
       <div style={{ width: '85%', height: '85%', padding: 20 }}>
-        {loading ? <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} /> :
+        {usersCountArr.every(a => a.isFetched) || usersCountArrMonth.every(a => a.isFetched) ||
+          usersCountArr.every(a => a.isFetched) || usersCountArrMonth.every(a => a.isFetched) ?
           <Bar redraw data={dataBar} options={optionsBar} />
+          :
+          <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} />
         }
       </div>
     </div>
