@@ -51,11 +51,10 @@ export function splitDateRangeInMonths(lowerDate: Date, upperDate: Date): { lowe
     while (currentMonthStart <= upperDate) {
         const year = currentMonthStart.getFullYear();
         const month = currentMonthStart.getMonth();
-        const lastMonthDay = new Date(year, month + 1, 0); //Start day of a month is 1 so 0 will be the last day of last month
-
-        //Upperdate should be last date of each month or the upperdate itself if last day of month is higher
-        if (lastMonthDay <= upperDate) {
-            dateChunks.push({ lowerDate: currentMonthStart.toISOString(), upperDate: lastMonthDay.toISOString() });
+        const nextMonthStart = new Date(year, month + 1, 1); 
+        
+        if (nextMonthStart <= upperDate) {
+            dateChunks.push({ lowerDate: currentMonthStart.toISOString(), upperDate: nextMonthStart.toISOString() });
         } else {
             dateChunks.push({ lowerDate: currentMonthStart.toISOString(), upperDate: upperDate.toISOString() });
         }

@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { DatePicker, Spin } from "antd";
 import { RangePickerProps } from "antd/es/date-picker";
 import dayjs, { Dayjs } from "dayjs";
-import { getMonthsAndYearsLabelBar, splitDateRangeInWeeks, getWeekLabelBar } from "../../../../utils/dateFormat";
+import { getMonthsAndYearsLabelBar, splitDateRangeInWeeks, getWeekLabelBar, splitDateRangeInMonths } from "../../../../utils/dateFormat";
 import { useQueries } from "react-query";
 import { SearchUserParams, UserAPI } from "../../../../apis/UserAPI";
 
@@ -54,6 +54,7 @@ const disabledDate: RangePickerProps['disabledDate'] = (current) => {
 const ChartRevenue = () => {
 
   const [fetchParams, setFetchParams] = useState<SearchUserParams[]>(splitDateRangeInWeeks(new Date('2023-10-01'), new Date()))
+  const [fetchParamsMonth, setFetchParamsMonth] = useState<SearchUserParams[]>(splitDateRangeInMonths(new Date('2023-10-01'), new Date()))
   const [fetchDateRange, setFetchDateRange] = useState([new Date('2023-10-01').toISOString(), new Date().toISOString()])
 
   const [labelBar, setLabelBar] = useState<string[]>([])
@@ -62,8 +63,6 @@ const ChartRevenue = () => {
   const [filter, setFilter] = useState('none')
   const [mode, setMode] = useState('total')
   const [dateRange, setDateRange] = useState([new Date('2023-10-01').toISOString(), new Date().toISOString()])
-
-  const [chartLoading, setChartLoading] = useState<boolean>(false)
 
   const dataBar = {
     responsive: true,
@@ -78,17 +77,43 @@ const ChartRevenue = () => {
   };
 
   //Premium User Data
+  //Week
   const usersCountArr = useQueries(
     fetchParams.map(result => {
       return {
         queryKey: ['user', result.lowerDate, result.upperDate],
-        queryFn: async () => await UserAPI.getUserCount({
+        queryFn: async () => await UserAPI.getUserPremiumCount({
           lowerDate: result.lowerDate,
           upperDate: result.upperDate,
         }),
       }
     })
   )
+
+  //Month
+  const usersCountArrMonth = useQueries(
+    fetchParamsMonth.map(result => {
+      return {
+        queryKey: ['userMonth', result.lowerDate, result.upperDate],
+        queryFn: async () => await UserAPI.getUserPremiumCount({
+          lowerDate: result.lowerDate,
+          upperDate: result.upperDate,
+        }),
+      }
+    })
+  )
+
+  useEffect(() => {
+    usersCountArr.forEach(e => {
+      e.refetch();
+    });
+  }, [fetchParams])
+
+  useEffect(() => {
+    usersCountArrMonth.forEach(e => {
+      e.refetch();
+    });
+  }, [fetchParamsMonth])
 
   //For switching mode or switching filter, set new 'total' when 'change' changed
   useEffect(() => {
@@ -100,13 +125,12 @@ const ChartRevenue = () => {
       return sum;
     });
     setData(newTotal)
-    setChartLoading(false)
   }, [dataChange])
 
   const fillMonth = () => {
     setFilter('month')
     setLabelBar(getMonthsAndYearsLabelBar(fetchDateRange[0], fetchDateRange[1]))
-    setDataChange([0, 0, 15000, 0, 0, 30000])
+    setDataChange(usersCountArrMonth.map((obj) => obj.data * 15000))
   }
 
   const fillWeek = () => {
@@ -132,8 +156,9 @@ const ChartRevenue = () => {
 
   //Ok Date Click, set new date range, then refetch everything
   const onOKDateClick = () => {
-    setChartLoading(true)
     setFilter('none')
+    setLabelBar([])
+    setDataChange([])
     setFetchParams(splitDateRangeInWeeks(new Date(dateRange[0]), new Date(dateRange[1])))
     setFetchDateRange(dateRange)
   }
@@ -172,10 +197,10 @@ const ChartRevenue = () => {
         </div>
       </div>
       <div style={{ width: '85%', height: '85%', padding: 20 }}>
-        {chartLoading ?
-          <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} />
-          :
+        {usersCountArr.every(a => a.isFetched) ||  usersCountArrMonth.every(a => a.isFetched) ?
           <Line redraw data={dataBar} options={optionsBar} />
+          :
+          <Spin className={styled["spin"]} indicator={<LoadingOutlined style={{ fontSize: 40 }} spin />} />
         }
       </div>
     </div>
