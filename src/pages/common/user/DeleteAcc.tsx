@@ -70,7 +70,7 @@ const DeleteAcc = () => {
                     onCancel={() => setOpen(false)}
                     icon={<WarningOutlined style={{ color: 'red' }} />}
                 >
-                    <button style={{ backgroundColor: 'red', padding: '5px 20px', borderRadius: '20px', color: 'white', fontSize: '15px', fontWeight: 'bold' }}
+                    <button style={{ backgroundColor: 'red', padding: '5px 20px', borderRadius: '20px', color: 'white', fontSize: '15px', fontWeight: 'bold', marginBottom: '20px' }}
                         onClick={() => setOpen(true)}>
                         Delete your account
                     </button>
