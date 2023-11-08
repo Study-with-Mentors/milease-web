@@ -9,7 +9,7 @@ import UsersList from "../pages/common/admin/userList/UsersList";
 import AdminAuthorize from "../pages/common/admin/AdminAuthorize";
 import UserAuthorize from "../pages/common/user/UserAuthorize";
 import Profile from "../pages/common/user/Profile";
-import { Delete } from "@mui/icons-material";
+import DeleteAcc from "../pages/common/user/DeleteAcc";
 
 const CommonRoute = () => {
 
@@ -55,7 +55,7 @@ const CommonRoute = () => {
         },
         {
           path: "delete",
-          element: <Delete />
+          element: <DeleteAcc />
         }
       ]
     },

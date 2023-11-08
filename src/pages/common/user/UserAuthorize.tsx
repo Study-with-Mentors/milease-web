@@ -47,9 +47,7 @@ const UserAuthorize = () => {
         <div className={styled["main-container"]}>
             <MileaseNavbarProfile />
             {login ?
-                <div className={styled["top-container"]}>
-                    <Outlet />
-                </div>
+                <Outlet />
                 :
                 <div className={styled["top-container"]}>
                     LOADING ...
