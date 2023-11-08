@@ -39,7 +39,7 @@ const AdminAuthorize = () => {
             }
         } else {
             setLogin(false)
-            navigate('/auth')
+            navigate('/auth', { state: { prevPath: "Admin" } })
         }
     }, [])
 

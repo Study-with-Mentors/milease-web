@@ -2,12 +2,12 @@ import styled from "./LoginGooglePage.module.scss";
 import Milease from "../../assets/milease_logo.png";
 import AuthImage from "../../assets/login_signup_main.png"
 import { GoogleLogin } from '@react-oauth/google';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLoginGoogle } from "../../hooks/useLoginGoogle";
 import jwtDecode from "jwt-decode";
 import { Spin, notification } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface JWTData {
   sub: string,
@@ -22,6 +22,10 @@ type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 const LoginGooglePage = () => {
 
+  let { state } = useLocation();
+
+  console.log(state)
+
   const {
     mutate: loginGoogle,
   } = useLoginGoogle();
@@ -29,6 +33,14 @@ const LoginGooglePage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false)
   const [api, contextHolder] = notification.useNotification();
+
+  useEffect(() => {
+    if (state) {
+      if (state.prevPath !== "Home") {
+        openNotificationWithIcon('error', 'Error', `Please login first`)
+      }
+    }
+  }, [])
 
   const openNotificationWithIcon = (type: NotificationType, message: string, description: string) => {
     api[type]({
@@ -74,6 +86,12 @@ const LoginGooglePage = () => {
                       console.log(data)
                       if (decode.role == "ADMIN") {
                         navigate('/admin')
+                      } else if (state) {
+                        if (state.prevPath === "DeleteAcc") {
+                          navigate('/profile/delete')
+                        } else {
+                          navigate('/profile')
+                        }
                       } else {
                         navigate('/profile')
                       }

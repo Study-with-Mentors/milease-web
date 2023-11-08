@@ -38,7 +38,7 @@ export const MileaseNavbar = () => {
             </div>
             <div>
                 {!login ?
-                    <Link to={'/auth'} className={styled["loginLink"]}>
+                    <Link to={'/auth'} state={{ prevPath: "Home" }} className={styled["loginLink"]}>
                         Login
                     </Link> :
                     <Link to={'/profile'} className={styled["logoutLink"]}>
@@ -46,9 +46,10 @@ export const MileaseNavbar = () => {
                     </Link>
 
                 }
-                <Link to={'/auth'} className={styled["downloadLink"]}>
+                <a href="https://expo.dev/accounts/tmquan/projects/milease/builds/8c6d8d03-4129-4b4a-8a94-a42251e9b83b"
+                    className={styled["downloadLink"]}>
                     Download our app
-                </Link>
+                </a>
             </div>
         </div>
     )

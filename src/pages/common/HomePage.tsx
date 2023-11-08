@@ -63,7 +63,10 @@ const HomePage = () => {
                 <div className={styled["detail-flex-center"]}>
                     <div className={styled["description-center"]}>What are you waiting for?</div>
                     <div className={styled["title-big"]}>Explore Vietnam in your way!</div>
-                    <Link to={'/auth'} className={styled["downloadLink"]}>Download our app</Link>
+                    <a href="https://expo.dev/accounts/tmquan/projects/milease/builds/8c6d8d03-4129-4b4a-8a94-a42251e9b83b"
+                        className={styled["downloadLink"]}>
+                        Download our app
+                    </a>
                 </div>
             </div>
             <MileaseFooter />

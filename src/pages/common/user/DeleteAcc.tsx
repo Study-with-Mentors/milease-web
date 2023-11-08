@@ -23,7 +23,7 @@ const DeleteAcc = () => {
             setOpen(false);
             setConfirmLoading(false);
             localStorage.clear()
-            navigate('/auth')
+            navigate('/auth', { state: { prevPath: "DeleteAcc" } })
         }, 3000);
 
     }

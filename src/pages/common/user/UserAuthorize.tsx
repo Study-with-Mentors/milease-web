@@ -1,6 +1,6 @@
 import styled from "./UserAuthorize.module.scss";
 import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import MileaseNavbarProfile from "../../../components/navbar/MileaseNavbarProfile";
 
@@ -21,6 +21,7 @@ interface JWTData {
 
 const UserAuthorize = () => {
 
+    let { pathname } = useLocation()
     const [login, setLogin] = useState(false)
     const navigate = useNavigate();
 
@@ -39,7 +40,11 @@ const UserAuthorize = () => {
             }
         } else {
             setLogin(false)
-            navigate('/auth')
+            if (pathname === "/profile/delete") {
+                navigate('/auth', { state: { prevPath: "DeleteAcc" } })
+            } else {
+                navigate('/auth', { state: { prevPath: "Profile" } })
+            }
         }
     }, [])
 

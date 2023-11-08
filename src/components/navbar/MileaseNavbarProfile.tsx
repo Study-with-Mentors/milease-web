@@ -1,9 +1,8 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import styled from "./MileaseNavbar.module.scss";
 import Logo from "../../assets/milease_icon.png"
 
 export const MileaseNavbarProfile = () => {
-
     const navigate = useNavigate();
 
     const onLogout = () => {
