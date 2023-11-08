@@ -75,7 +75,7 @@ const LoginGooglePage = () => {
                       if (decode.role == "ADMIN") {
                         navigate('/admin')
                       } else {
-                        navigate('/')
+                        navigate('/profile')
                       }
                     },
                     onError() {

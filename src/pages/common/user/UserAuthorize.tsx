@@ -1,8 +1,8 @@
-import styled from "./AdminAuthorize.module.scss";
+import styled from "./UserAuthorize.module.scss";
 import { useEffect, useState } from "react";
-import { Outlet, useNavigate, Link } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import Logo from "../../../assets/milease_logo.png"
+import MileaseNavbarProfile from "../../../components/navbar/MileaseNavbarProfile";
 
 interface JWTGoogleToken {
     name: string;
@@ -19,7 +19,7 @@ interface JWTData {
     traveler_status: string
 }
 
-const AdminAuthorize = () => {
+const UserAuthorize = () => {
 
     const [login, setLogin] = useState(false)
     const navigate = useNavigate();
@@ -32,10 +32,10 @@ const AdminAuthorize = () => {
         if (token && google_jwt_token) {
             var decoded = jwt_decode<JWTGoogleToken>(google_jwt_token);
             var decodedToken = jwt_decode<JWTData>(token);
-            if (decoded && decodedToken.role == "ADMIN") {
+            if (decoded && decodedToken.role != "ADMIN") {
                 setLogin(true)
             } else {
-                navigate('/profile')
+                navigate('/admin')
             }
         } else {
             setLogin(false)
@@ -43,23 +43,13 @@ const AdminAuthorize = () => {
         }
     }, [])
 
-    const onLogout = () => {
-        localStorage.clear()
-        setLogin(false)
-        navigate('/auth')
-    }
-
     return (
         <div className={styled["main-container"]}>
-            <div className={styled["top-container"]}>
-                <div className={styled["top-title"]}>
-                    <Link to="/"><img src={Logo} alt="Logo" style={{ width: '70px', marginRight: '20px' }} /></Link>DASHBOARD
+            <MileaseNavbarProfile />
+            {login ?
+                <div className={styled["top-container"]}>
+                    <Outlet />
                 </div>
-                <button className={styled["logout-button"]} onClick={onLogout}>
-                    Logout
-                </button>
-            </div>
-            {login ? <Outlet />
                 :
                 <div className={styled["top-container"]}>
                     LOADING ...
@@ -69,4 +59,4 @@ const AdminAuthorize = () => {
     )
 }
 
-export default AdminAuthorize;
+export default UserAuthorize;

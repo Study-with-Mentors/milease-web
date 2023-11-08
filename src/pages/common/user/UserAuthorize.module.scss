@@ -1,0 +1,36 @@
+$primary-red: #ee5a5b;
+
+.main-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+
+    .top-container {
+        margin-top: 90px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        color: black;
+
+        .top-title {
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .logout-button {
+            color: white;
+            padding: 10px 30px;
+            font-weight: bold;
+            background-color: $primary-red;
+            border: 1px solid $primary-red;
+            border-radius: 20px;
+        }
+    }
+}
