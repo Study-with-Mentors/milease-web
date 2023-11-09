@@ -37,14 +37,20 @@ $primary-red: #ee5a5b;
             margin-bottom: 20px;
         }
 
-        .red-button {
-            font-size: 15px;
-            text-decoration: none;
+        .status {
+            font-size: 20px;
             color: white;
             background-color: $primary-red;
-            font-weight: 300;
-            padding: 5px 20px;
+            font-weight: 500;
+            padding: 2px 25px;
             border-radius: 20px;
+        }
+
+        .red-button {
+            font-size: 20px;
+            text-decoration: none;
+            color: $primary-red;
+            font-weight: 300;
         }
 
         .logoutLink {

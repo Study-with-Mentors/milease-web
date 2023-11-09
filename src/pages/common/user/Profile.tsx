@@ -27,7 +27,7 @@ const Profile = () => {
     const navigate = useNavigate();
 
     const [userData, setUserData] = useState<JWTGoogleToken>()
-    const [travellerStatus, setTravellerStatus] = useState<string>("")
+    const [travellerStatus, setTravellerStatus] = useState<string>("NORMAL")
     const [profileLoading, setProfileLoading] = useState<boolean>(true)
     const [statusLoading, setStatusLoading] = useState<boolean>(true)
 
@@ -51,6 +51,7 @@ const Profile = () => {
             var decodedToken = jwt_decode<JWTData>(token);
             setUserData(decoded)
             setTravellerStatus(decodedToken.traveler_status)
+            console.log(decodedToken)
         }
     }, [])
 
@@ -72,8 +73,13 @@ const Profile = () => {
                 }
                 <div className={styled["name"]}>{!profileLoading ? userData?.name : "No Data"}</div>
                 <div className={styled["email"]}>{!profileLoading ? userData?.email : "No Data"}</div>
+                {!statusLoading && travellerStatus == "PREMIUM" ?
+                    <div className={styled["status"]}>PREMIUM</div>
+                    :
+                    <></>
+                }
                 <button className={styled["logoutLink"]} onClick={onLogout}>
-                    <LoginOutlined style={{marginRight: '9px'}}/>Logout
+                    <LoginOutlined style={{ marginRight: '9px' }} />Logout
                 </button>
                 <Link to="/profile/delete" className={styled["red-button"]}>
                     Delete Account
