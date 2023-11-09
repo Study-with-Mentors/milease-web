@@ -11,6 +11,7 @@ import WhatWeDoImage5 from "../../assets/what_we_do_5.png"
 import styled from "./HomePage.module.scss";
 import { Link } from "react-router-dom";
 import WhatWeDoCard from "../../components/home/WhatWeDoCard";
+import { AndroidFilled } from "@ant-design/icons";
 
 const HomePage = () => {
     document.title = "Milease"
@@ -65,7 +66,7 @@ const HomePage = () => {
                     <div className={styled["title-big"]}>Explore Vietnam in your way!</div>
                     <a href="https://expo.dev/accounts/tmquan/projects/milease/builds/8c6d8d03-4129-4b4a-8a94-a42251e9b83b"
                         className={styled["downloadLink"]}>
-                        Download our app
+                        <AndroidFilled style={{marginRight: '9px'}}/>Download our app
                     </a>
                 </div>
             </div>

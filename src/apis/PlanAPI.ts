@@ -10,6 +10,31 @@ export type SearchPlanParams = {
   upperDate?: string;
 };
 
+export type GetPlanResult = {
+  id: number;
+  name: string;
+  start: string;
+  end: string;
+  status: string;
+};
+
+export type GetPlansParams = {
+  pageSize: number;
+  name?: string;
+  direction?: string;
+  page?: number;
+  lowerDate?: string;
+  upperDate?: string;
+  orderBy?: string;
+};
+
+export type GetPlanPagingResult = {
+  totalPages: number;
+  totalCount: number;
+  currentPage: number;
+  values: GetPlanResult[];
+};
+
 export const PlanAPI = {
   getPlanCount: async (searchPlanParams: SearchPlanParams) => {
     var url;
@@ -21,6 +46,18 @@ export const PlanAPI = {
 
     const res = await http.get(url);
     // console.log(res.data);
+    return res.data;
+  },
+  getAllPlans: async (params: GetPlansParams) => {
+    const token = localStorage.getItem("access_token")
+    const res = await http.get<GetPlanPagingResult>(
+      `/plans?${toQueryParams(params)}`,
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
     return res.data;
   },
 };

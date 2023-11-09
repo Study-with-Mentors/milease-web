@@ -10,11 +10,67 @@ $primary-red: #ee5a5b;
 }
 
 .top-container {
+    width: 90%;
     margin-top: 120px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    align-items: center;
+    text-align: center;
+
+    .profile-left {
+        width: 40%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .name {
+            color: black;
+            font-size: 23px;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        .email {
+            color: black;
+            font-size: 15px;
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        .red-button {
+            font-size: 15px;
+            text-decoration: none;
+            color: white;
+            background-color: $primary-red;
+            font-weight: 300;
+            padding: 5px 20px;
+            border-radius: 20px;
+        }
+
+        .logoutLink {
+            font-size: 20px;
+            margin: 10px 40px;
+            color: black;
+            font-weight: bold;
+            background-color: transparent;
+            border: 1px solid white;
+        }
+    }
+
+    .profile-right {
+        width: 50%;
+
+        .right-title {
+            font-size: 30px;
+            font-weight: bold;
+            color: black;
+        }
+
+        .right-des {
+            font-size: 18px;
+            color: black;
+        }
+    }
 
     .top-title {
         font-size: 30px;

@@ -1,14 +1,9 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styled from "./MileaseNavbar.module.scss";
 import Logo from "../../assets/milease_icon.png"
+import { AndroidFilled } from "@ant-design/icons";
 
 export const MileaseNavbarProfile = () => {
-    const navigate = useNavigate();
-
-    const onLogout = () => {
-        localStorage.clear()
-        navigate('/auth')
-    }
 
     return (
         <div className={styled["container-main"]}>
@@ -33,10 +28,11 @@ export const MileaseNavbarProfile = () => {
             <div>
                 <Link to={'/profile'} className={styled["loginLink"]}>
                     Profile
-                </Link>
-                <button className={styled["logoutLink"]} onClick={onLogout}>
-                    Logout
-                </button>
+                </Link>                
+                <a href="https://expo.dev/accounts/tmquan/projects/milease/builds/8c6d8d03-4129-4b4a-8a94-a42251e9b83b"
+                    className={styled["downloadLink"]}>
+                    <AndroidFilled style={{marginRight: '9px'}}/>Download our app
+                </a>
             </div>
         </div>
     )

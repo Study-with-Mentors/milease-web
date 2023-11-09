@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import styled from "./MileaseNavbar.module.scss";
 import Logo from "../../assets/milease_icon.png"
 import { useEffect, useState } from "react";
+import { AndroidFilled } from "@ant-design/icons";
 
 export const MileaseNavbar = () => {
 
@@ -48,7 +49,7 @@ export const MileaseNavbar = () => {
                 }
                 <a href="https://expo.dev/accounts/tmquan/projects/milease/builds/8c6d8d03-4129-4b4a-8a94-a42251e9b83b"
                     className={styled["downloadLink"]}>
-                    Download our app
+                    <AndroidFilled style={{marginRight: '9px'}}/>Download our app
                 </a>
             </div>
         </div>

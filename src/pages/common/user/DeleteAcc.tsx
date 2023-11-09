@@ -3,6 +3,7 @@ import styled from "./UserAuthorize.module.scss";
 import { Divider, Input, List, Popconfirm } from "antd";
 import { WarningOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import Color from "../../../constants/Color";
 
 const data = [
     'All your plans as well as steps will be deleted',
@@ -70,7 +71,7 @@ const DeleteAcc = () => {
                     onCancel={() => setOpen(false)}
                     icon={<WarningOutlined style={{ color: 'red' }} />}
                 >
-                    <button style={{ backgroundColor: 'red', padding: '5px 20px', borderRadius: '20px', color: 'white', fontSize: '15px', fontWeight: 'bold', marginBottom: '20px' }}
+                    <button style={{ backgroundColor: Color.main_red_color, padding: '5px 20px', borderRadius: '20px', color: 'white', fontSize: '15px', fontWeight: 'bold', marginBottom: '20px' }}
                         onClick={() => setOpen(true)}>
                         Delete your account
                     </button>
