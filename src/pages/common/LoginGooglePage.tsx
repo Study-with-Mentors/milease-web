@@ -24,8 +24,6 @@ const LoginGooglePage = () => {
 
   let { state } = useLocation();
 
-  console.log(state)
-
   const {
     mutate: loginGoogle,
   } = useLoginGoogle();
@@ -83,7 +81,7 @@ const LoginGooglePage = () => {
                       openNotificationWithIcon('success', 'Success', `Login sucessful!`)
                       localStorage.setItem("access_token", data);
                       var decode = jwtDecode<JWTData>(data)
-                      console.log(data)
+                      // console.log(data)
                       if (decode.role == "ADMIN") {
                         navigate('/admin')
                       } else if (state) {
@@ -99,14 +97,14 @@ const LoginGooglePage = () => {
                     onError() {
                       setLoading(false)
                       openNotificationWithIcon('error', `Login failed`, `There's an error trying to login to your Google account`)
-                      console.log("Error")
+                      // console.log("Error")
                     },
                   });
                 }}
                 onError={() => {
                   setLoading(false)
                   openNotificationWithIcon('error', `Login failed`, `There's an error trying to login to your Google account`)
-                  console.log('Login Failed');
+                  // console.log('Login Failed');
                 }}
               />
             </div>

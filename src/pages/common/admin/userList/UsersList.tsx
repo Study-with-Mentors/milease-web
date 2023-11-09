@@ -88,10 +88,10 @@ const UsersList = () => {
                                                         approvePremium([items.id], {
                                                             onSuccess() {
                                                                 refetch();
-                                                                console.log("OK")
+                                                                // console.log("OK")
                                                             },
                                                             onError() {
-                                                                console.log("Error")
+                                                                // console.log("Error")
                                                             },
                                                         })
                                                     }}>

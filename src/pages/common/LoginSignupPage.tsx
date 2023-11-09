@@ -13,7 +13,7 @@ const LoginSignupPage = () => {
   const [current, setCurrent] = useState(propsData ? propsData?.current : "loginForm")
   const onAuthPageChange = (e: any) => {
     setCurrent(e.target.value)
-    console.log(e.target.value)
+    // console.log(e.target.value)
   }
 
   return (
