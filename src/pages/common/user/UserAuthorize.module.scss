@@ -1,4 +1,5 @@
 $primary-red: #ee5a5b;
+$dark-blue: #074792;
 
 .main-container {
     width: 100%;
@@ -75,6 +76,47 @@ $primary-red: #ee5a5b;
         .right-des {
             font-size: 18px;
             color: black;
+        }
+
+        .list {
+            width: 100%;
+            margin: 10px 0;
+            box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.14), 0px 3px 3px rgba(0, 0, 0, 0.12), 0px 1px 8px rgba(0, 0, 0, 0.2);
+            ;
+
+            .date {
+                background-color: $primary-red;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                font-size: larger;
+                font-weight: 600;
+                padding: 5px;
+            }
+
+            .name-status {
+                background-color: white;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                font-size: large;
+                font-weight: 400;
+                padding: 5px;
+
+                .name {
+                    width: 60%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    text-align: left;
+                    color: black;
+                }
+
+                .status {
+                    color: $dark-blue;
+                    font-weight: 600;
+                    text-align: right;
+                }
+            }
         }
     }
 

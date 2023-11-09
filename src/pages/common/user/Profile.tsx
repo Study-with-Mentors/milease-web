@@ -3,8 +3,9 @@ import styled from "./UserAuthorize.module.scss";
 import { useEffect, useState } from "react";
 import { useGetAllPlans } from "../../../hooks/useGetPlans";
 import jwt_decode from "jwt-decode";
-import { Avatar } from "antd";
+import { Avatar, Empty } from "antd";
 import { AntDesignOutlined, LoadingOutlined, LoginOutlined } from "@ant-design/icons";
+import { removeTime } from "../../../utils/dateFormat";
 
 
 interface JWTGoogleToken {
@@ -31,7 +32,7 @@ const Profile = () => {
     const [profileLoading, setProfileLoading] = useState<boolean>(true)
     const [statusLoading, setStatusLoading] = useState<boolean>(true)
 
-    const { data } = useGetAllPlans({
+    const { data, isLoading } = useGetAllPlans({
         pageSize: 3,
         page: 0
     });
@@ -41,8 +42,6 @@ const Profile = () => {
         navigate('/auth')
     }
 
-    console.log(data)
-
     useEffect(() => {
         const token = localStorage.getItem("access_token")
         const google_jwt_token = localStorage.getItem("google_jwt_token")
@@ -51,7 +50,7 @@ const Profile = () => {
             var decodedToken = jwt_decode<JWTData>(token);
             setUserData(decoded)
             setTravellerStatus(decodedToken.traveler_status)
-            console.log(decodedToken)
+            // console.log(decodedToken)
         }
     }, [])
 
@@ -87,7 +86,23 @@ const Profile = () => {
             </div>
             <div className={styled["profile-right"]}>
                 <div className={styled["right-title"]}>Your Plans</div>
-                <div className={styled["right-des"]}>To add or modify your plans, download our app with button at the top</div>
+                <div className={styled["right-des"]}>Download our app above to add or modify your plans</div>
+                {isLoading ? <LoadingOutlined /> :
+                    data?.totalCount == 0 ? <Empty style={{ margin: '20px' }} /> :
+                        data?.values.map((item) => (
+                            <div key={item.id} className={styled["list"]}>
+                                <div className={styled["date"]}>
+                                    <div>{removeTime(new Date(item.start))}</div>
+                                    <div>-</div>
+                                    <div>{removeTime(new Date(item.end))}</div>
+                                </div>
+                                <div className={styled["name-status"]}>
+                                    <div className={styled["name"]}>{item.name}</div>
+                                    <div className={styled["status"]}>{item.status != null ? item.status : "DRAFT"}</div>
+                                </div>
+                            </div>
+                        ))
+                }
             </div>
         </div>
     )

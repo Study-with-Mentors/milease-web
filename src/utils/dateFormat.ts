@@ -51,8 +51,8 @@ export function splitDateRangeInMonths(lowerDate: Date, upperDate: Date): { lowe
     while (currentMonthStart <= upperDate) {
         const year = currentMonthStart.getFullYear();
         const month = currentMonthStart.getMonth();
-        const nextMonthStart = new Date(year, month + 1, 1); 
-        
+        const nextMonthStart = new Date(year, month + 1, 1);
+
         if (nextMonthStart <= upperDate) {
             dateChunks.push({ lowerDate: currentMonthStart.toISOString(), upperDate: nextMonthStart.toISOString() });
         } else {
@@ -133,4 +133,9 @@ export function getWeekLabelBar(lowerDate: Date, upperDate: Date): string[] {
     }
 
     return rangeLabels;
+}
+
+//DD-MM-YYYY
+export function removeTime(date: Date) {
+    return date.getFullYear() + " / " + (date.getMonth() + 1) + " / " + (date.getDate() < 10 ? "0" + date.getDate() : date.getDate())
 }
