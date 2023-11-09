@@ -34,7 +34,9 @@ const LoginGooglePage = () => {
 
   useEffect(() => {
     if (state) {
-      if (state.prevPath !== "Home") {
+      if (state.prevPath === "DeleteSuccess") {
+        openNotificationWithIcon('success', 'Delete Successful', `Remember, you can always recover your account by login again`)
+      } else if (state.prevPath !== "Home") {
         openNotificationWithIcon('error', 'Error', `Please login first`)
       }
     }
@@ -44,6 +46,7 @@ const LoginGooglePage = () => {
     api[type]({
       message: message,
       description: description,
+      duration: 15
     });
   };
 
