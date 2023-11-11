@@ -139,3 +139,19 @@ export function getWeekLabelBar(lowerDate: Date, upperDate: Date): string[] {
 export function removeTime(date: Date) {
     return date.getFullYear() + " / " + (date.getMonth() + 1) + " / " + (date.getDate() < 10 ? "0" + date.getDate() : date.getDate())
 }
+
+export function addOneMonthToDate(inputDate: string) {
+    // Clone the input date to avoid modifying the original date
+    const date = new Date(inputDate);
+
+    // Increment the month value by 1
+    date.setMonth(date.getMonth() + 1);
+
+    // Handle the case where the result goes beyond December of the current year
+    if (date.getMonth() !== (new Date(inputDate).getMonth() + 1) % 12) {
+        // Increment the year by 1
+        date.setFullYear(date.getFullYear() + 1);
+    }
+
+    return date.toISOString();
+}

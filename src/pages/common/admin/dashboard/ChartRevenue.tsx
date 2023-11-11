@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { DatePicker, Spin } from "antd";
 import { RangePickerProps } from "antd/es/date-picker";
 import dayjs, { Dayjs } from "dayjs";
-import { getMonthsAndYearsLabelBar, splitDateRangeInWeeks, getWeekLabelBar, splitDateRangeInMonths } from "../../../../utils/dateFormat";
+import { getMonthsAndYearsLabelBar, splitDateRangeInWeeks, getWeekLabelBar, splitDateRangeInMonths, addOneMonthToDate } from "../../../../utils/dateFormat";
 import { useQueries } from "react-query";
 import { SearchUserParams, UserAPI } from "../../../../apis/UserAPI";
 
@@ -61,7 +61,7 @@ const ChartRevenue = () => {
   const [data, setData] = useState<number[]>([])
   const [dataChange, setDataChange] = useState<number[]>([])
   const [filter, setFilter] = useState('none')
-  const [mode, setMode] = useState('total')
+  const [mode, setMode] = useState('none')
   const [dateRange, setDateRange] = useState([new Date('2023-10-01').toISOString(), new Date().toISOString()])
 
   const dataBar = {
@@ -81,10 +81,10 @@ const ChartRevenue = () => {
   const usersCountArr = useQueries(
     fetchParams.map(result => {
       return {
-        queryKey: ['user', result.lowerDate, result.upperDate],
+        queryKey: ['userPremium', result.lowerDate, result.upperDate],
         queryFn: async () => await UserAPI.getUserPremiumCount({
-          lowerDate: result.lowerDate,
-          upperDate: result.upperDate,
+          lowerDate: addOneMonthToDate(result.lowerDate as string),
+          upperDate: addOneMonthToDate(result.upperDate as string),
         }),
       }
     })
@@ -94,10 +94,10 @@ const ChartRevenue = () => {
   const usersCountArrMonth = useQueries(
     fetchParamsMonth.map(result => {
       return {
-        queryKey: ['userMonth', result.lowerDate, result.upperDate],
+        queryKey: ['userPremiumMonth', result.lowerDate, result.upperDate],
         queryFn: async () => await UserAPI.getUserPremiumCount({
-          lowerDate: result.lowerDate,
-          upperDate: result.upperDate,
+          lowerDate: addOneMonthToDate(result.lowerDate as string),
+          upperDate: addOneMonthToDate(result.upperDate as string),
         }),
       }
     })
@@ -157,6 +157,7 @@ const ChartRevenue = () => {
   //Ok Date Click, set new date range, then refetch everything
   const onOKDateClick = () => {
     setFilter('none')
+    setMode('none')
     setLabelBar([])
     setDataChange([])
     setFetchParams(splitDateRangeInWeeks(new Date(dateRange[0]), new Date(dateRange[1])))
@@ -184,7 +185,7 @@ const ChartRevenue = () => {
         <div>
           <RangePicker onChange={handleRangeChange} disabledDate={disabledDate}
             defaultValue={[dayjs('2023-10-01'), dayjs().endOf('day')]} />
-          <button style={{ borderRadius: '5px', padding: '3px 10px', marginLeft: '5px' }} onClick={onOKDateClick}>OK</button>
+          <button style={{ borderRadius: '5px', padding: '3px 10px', marginLeft: '5px', color: 'white' }} onClick={onOKDateClick}>OK</button>
         </div>
 
         <div className={styled["buttons-container"]}>

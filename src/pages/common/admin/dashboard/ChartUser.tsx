@@ -19,7 +19,7 @@ import { DatePicker, Spin } from "antd";
 import { RangePickerProps } from "antd/es/date-picker";
 import dayjs, { Dayjs } from "dayjs";
 import { SearchUserParams, UserAPI } from "../../../../apis/UserAPI";
-import { getMonthsAndYearsLabelBar, getWeekLabelBar, splitDateRangeInMonths, splitDateRangeInWeeks } from "../../../../utils/dateFormat";
+import { addOneMonthToDate, getMonthsAndYearsLabelBar, getWeekLabelBar, splitDateRangeInMonths, splitDateRangeInWeeks } from "../../../../utils/dateFormat";
 import { useQueries } from "react-query";
 
 ChartJS.register(
@@ -70,7 +70,7 @@ const ChartUser = () => {
   const [dataPremiumChange, setDataPremiumChange] = useState<number[]>([])
 
   const [filter, setFilter] = useState('none')
-  const [mode, setMode] = useState('total')
+  const [mode, setMode] = useState('none')
 
   const [dateRange, setDateRange] = useState([new Date('2023-10-01').toISOString(), new Date().toISOString()])
 
@@ -126,8 +126,8 @@ const ChartUser = () => {
       return {
         queryKey: ['userPremium', result.lowerDate, result.upperDate],
         queryFn: async () => await UserAPI.getUserPremiumCount({
-          lowerDate: result.lowerDate,
-          upperDate: result.upperDate,
+          lowerDate: addOneMonthToDate(result.lowerDate as string),
+          upperDate: addOneMonthToDate(result.upperDate as string),
         }),
       }
     })
@@ -139,8 +139,8 @@ const ChartUser = () => {
       return {
         queryKey: ['userPremiumMonth', result.lowerDate, result.upperDate],
         queryFn: async () => await UserAPI.getUserPremiumCount({
-          lowerDate: result.lowerDate,
-          upperDate: result.upperDate,
+          lowerDate: addOneMonthToDate(result.lowerDate as string),
+          upperDate: addOneMonthToDate(result.upperDate as string),
         }),
       }
     })
@@ -220,6 +220,7 @@ const ChartUser = () => {
   //Ok Date Click, set new date range, then refetch everything
   const onOKDateClick = () => {
     setFilter('none')
+    setMode('none')
     setLabelBar([])
     setDataChange([])
     setDataPremiumChange([])
@@ -248,7 +249,7 @@ const ChartUser = () => {
         <div>
           <RangePicker onChange={handleRangeChange} disabledDate={disabledDate}
             defaultValue={[dayjs('2023-10-01'), dayjs().endOf('day')]} />
-          <button style={{ borderRadius: '5px', padding: '3px 10px', marginLeft: '5px' }} onClick={onOKDateClick}>OK</button>
+          <button style={{ borderRadius: '5px', padding: '3px 10px', marginLeft: '5px', color: 'white' }} onClick={onOKDateClick}>OK</button>
         </div>
 
         <div className={styled["buttons-container"]}>
