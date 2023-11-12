@@ -144,11 +144,11 @@ export function addOneMonthToDate(inputDate: string) {
     // Clone the input date to avoid modifying the original date
     const date = new Date(inputDate);
 
-    // Increment the month value by 1
-    date.setMonth(date.getMonth() + 1);
+    // Increment the month value by 3
+    date.setMonth(date.getMonth() + 3);
 
     // Handle the case where the result goes beyond December of the current year
-    if (date.getMonth() !== (new Date(inputDate).getMonth() + 1) % 12) {
+    if (date.getMonth() !== (new Date(inputDate).getMonth() + 3) % 12) {
         // Increment the year by 1
         date.setFullYear(date.getFullYear() + 1);
     }
